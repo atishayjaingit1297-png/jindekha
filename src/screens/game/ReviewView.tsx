@@ -2,7 +2,7 @@ import { canSkip, currentTeam, pointsFor, reduce } from '../../core';
 import type { Outcome } from '../../core';
 import { CARD_BY_ID } from '../../content';
 import { useApp } from '../../state/AppContext';
-import { hi } from '../../i18n/hi';
+import { useT } from '../../i18n';
 import { Icon } from '../../ui/Icon';
 import { IconButton, useArmed } from '../../ui/controls';
 import { Standings, TeamChip } from '../../ui/TeamBits';
@@ -11,12 +11,14 @@ import type { GameViewProps } from './Game';
 const OUTCOMES: Outcome[] = ['correct', 'skip', 'violation', 'timeout'];
 
 export function OutcomeTag({ outcome }: { outcome: Outcome }) {
-  return <span className={`outcome ${outcome}`}>{hi.outcome[outcome]}</span>;
+  const t = useT();
+  return <span className={`outcome ${outcome}`}>{t.outcome[outcome]}</span>;
 }
 
 const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 
 export function ReviewView({ navigate, openScoreboard }: GameViewProps) {
+  const t = useT();
   const { game, dispatch } = useApp();
   const armed = useArmed();
   if (!game || !game.turn) return null;
@@ -27,30 +29,30 @@ export function ReviewView({ navigate, openScoreboard }: GameViewProps) {
 
   // Preview where confirming leads, using the pure engine, so the button can say exactly what's next.
   const next = reduce(game, { type: 'CONFIRM_TURN', now: Date.now() });
-  const nextLabel = next.status === 'completed' ? hi.game.seeResults : next.status === 'round_summary' ? hi.game.seeRoundSummary : hi.game.nextTurn;
+  const nextLabel = next.status === 'completed' ? t.game.seeResults : next.status === 'round_summary' ? t.game.seeRoundSummary : t.game.nextTurn;
 
   return (
     <main className="screen">
       <header className="topbar">
-        <IconButton icon="home" label={hi.game.home} onClick={() => navigate('home')} />
+        <IconButton icon="home" label={t.game.home} onClick={() => navigate('home')} />
         <span className="spacer" />
-        <IconButton icon="chart" label={hi.game.scoreboard} onClick={openScoreboard} />
+        <IconButton icon="chart" label={t.game.scoreboard} onClick={openScoreboard} />
       </header>
       <div className="headline">
-        <h1>{turn.endedBy === 'deck' ? hi.game.deckEnded : hi.game.timeUp}</h1>
+        <h1>{turn.endedBy === 'deck' ? t.game.deckEnded : t.game.timeUp}</h1>
         <div className="row" style={{ justifyContent: 'center', marginTop: 8 }}>
           <TeamChip team={team} />
         </div>
       </div>
 
       <section className="panel stack">
-        <h2>{hi.game.turnSummary}</h2>
+        <h2>{t.game.turnSummary}</h2>
         {turn.results.length === 0 ? (
-          <p className="muted">{hi.game.noCards}</p>
+          <p className="muted">{t.game.noCards}</p>
         ) : (
           <>
             <p className="muted small" style={{ margin: 0 }}>
-              {hi.game.reviewHelp}
+              {t.game.reviewHelp}
             </p>
             <ul className="result-list">
               {turn.results.map((r, i) => {
@@ -77,7 +79,7 @@ export function ReviewView({ navigate, openScoreboard }: GameViewProps) {
                           disabled={o === 'skip' && r.outcome !== 'skip' && !canSkip(game)}
                           onClick={() => dispatch({ type: 'EDIT_RESULT', index: i, outcome: o })}
                         >
-                          {hi.outcome[o]}
+                          {t.outcome[o]}
                         </button>
                       ))}
                     </div>
@@ -88,10 +90,10 @@ export function ReviewView({ navigate, openScoreboard }: GameViewProps) {
           </>
         )}
         <div className="turn-total">
-          <span>{hi.game.pointsThisTurn}</span>
+          <span>{t.game.pointsThisTurn}</span>
           <span style={{ color: own >= 0 ? 'var(--forest)' : 'var(--danger)' }}>{signed(own)}</span>
         </div>
-        {toOthers > 0 && <p className="muted small" style={{ margin: 0 }}>{hi.game.toOpponents(toOthers)}</p>}
+        {toOthers > 0 && <p className="muted small" style={{ margin: 0 }}>{t.game.toOpponents(toOthers)}</p>}
       </section>
 
       <Standings game={game} />

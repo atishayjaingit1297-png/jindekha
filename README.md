@@ -9,7 +9,9 @@ In each turn, one player describes the target word on a card to their team. They
 - **94 cards in 2 decks**, extracted and verified from the supplied PDFs. See [docs/DATA_AUDIT.md](docs/DATA_AUDIT.md).
 - 2–6 teams, optional player names (the describer rotates), configurable timer and scoring, round-based or score-target games. See [docs/RULES.md](docs/RULES.md).
 - Local multiplayer on one device. It works offline after the first visit, and an unfinished game survives a refresh or the app closing.
-- Hindi interface with Devanagari fonts bundled (Baloo 2, Mukta). Original branding and artwork.
+- Hindi and English interface (हि/EN switch on the home screen and in Settings). Card words always stay in Hindi, as printed in the PDFs.
+- Light and dark themes: follows the device by default, or pick Light/Dark (moon/sun button on the home screen).
+- Devanagari fonts bundled (Baloo 2, Mukta). Original branding, artwork and animations, which turn off when the device asks for reduced motion.
 - Architecture and the iOS/Android path: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Quick start

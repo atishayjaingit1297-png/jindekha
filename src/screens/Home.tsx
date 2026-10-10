@@ -1,14 +1,57 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useApp } from '../state/AppContext';
+import { useEffectiveTheme } from '../state/useEffectiveTheme';
 import type { Route } from '../state/router';
-import { hi } from '../i18n/hi';
+import { useT } from '../i18n';
 import { Logo } from '../ui/Logo';
 import { Icon } from '../ui/Icon';
 import { ConfirmDialog } from '../ui/controls';
 import { promptInstall, usePwa } from '../pwa/pwa';
+import { ALL_CARDS } from '../content';
+
+const TONES = ['saffron', 'maroon', 'forest', 'gold'] as const;
+
+/** Real target words from the decks drifting up behind the home screen. Decorative only. */
+function FloatingWords() {
+  const words = useMemo(() => {
+    const pool = [...ALL_CARDS].sort(() => Math.random() - 0.5).slice(0, 14);
+    return pool.map((c, i) => ({
+      text: c.target,
+      left: (i * 41 + 7) % 92,
+      size: 0.95 + ((i * 7) % 5) * 0.18,
+      duration: 22 + ((i * 5) % 9) * 2.5,
+      // Negative delays spread the words over the screen from the very first frame.
+      delay: -((i * 3.7) % 24),
+      tone: TONES[i % TONES.length],
+      tilt: ((i % 5) - 2) * 3,
+    }));
+  }, []);
+  return (
+    <div className="floating-words" aria-hidden>
+      {words.map((w, i) => (
+        <span
+          key={i}
+          className={`fw ${w.tone}`}
+          lang="hi"
+          style={{
+            left: `${w.left}%`,
+            fontSize: `${w.size}rem`,
+            animationDuration: `${w.duration}s`,
+            animationDelay: `${w.delay}s`,
+            ['--tilt' as string]: `${w.tilt}deg`,
+          }}
+        >
+          {w.text}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export function Home({ navigate }: { navigate: (r: Route) => void }) {
-  const { game } = useApp();
+  const t = useT();
+  const { game, prefs, updatePrefs } = useApp();
+  const theme = useEffectiveTheme(prefs.theme);
   const pwa = usePwa();
   const [confirmNew, setConfirmNew] = useState(false);
   const inProgress = game && game.status !== 'completed';
@@ -16,21 +59,45 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
   const onNew = () => (inProgress ? setConfirmNew(true) : navigate('setup'));
 
   return (
-    <main className="screen">
+    <main className="screen home">
+      <FloatingWords />
+      <header className="home-top">
+        <button
+          type="button"
+          className="pill-btn"
+          onClick={() => updatePrefs({ language: prefs.language === 'hi' ? 'en' : 'hi' })}
+          aria-label={t.home.switchLang}
+          title={t.home.switchLang}
+        >
+          <span lang={prefs.language === 'hi' ? 'en' : 'hi'}>{t.home.otherLangShort}</span>
+        </button>
+        <button
+          type="button"
+          className="icon-btn theme-btn"
+          onClick={() => updatePrefs({ theme: theme === 'dark' ? 'light' : 'dark' })}
+          aria-label={theme === 'dark' ? t.home.toLight : t.home.toDark}
+          title={theme === 'dark' ? t.home.toLight : t.home.toDark}
+        >
+          <Icon name={theme === 'dark' ? 'sun' : 'moon'} key={theme} />
+        </button>
+      </header>
+
       <div className="brand">
-        <Logo />
-        <h1>{hi.appName}</h1>
-        <span className="latin">{hi.appNameLatin}</span>
-        <div className="ornament" aria-hidden />
-        <p className="tagline">{hi.tagline}</p>
-        <p className="muted small" style={{ maxWidth: 380, margin: 0 }}>
-          {hi.intro}
-        </p>
+        <Logo animated />
+        <h1 className="brand-title">{t.appName}</h1>
+        <span className="latin">{t.appNameLatin}</span>
+        <div className="ornament" aria-hidden>
+          {Array.from({ length: 9 }, (_, i) => (
+            <i key={i} style={{ animationDelay: `${i * 0.12}s` }} />
+          ))}
+        </div>
+        <p className="tagline">{t.tagline}</p>
+        <p className="muted small intro">{t.intro}</p>
       </div>
 
       {!pwa.online && (
         <div className="banner" role="status">
-          <Icon name="wifiOff" /> {hi.home.offline}
+          <Icon name="wifiOff" /> {t.home.offline}
         </div>
       )}
 
@@ -39,33 +106,33 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
           <button type="button" className="continue-card" onClick={() => navigate('game')}>
             <Icon name={game.status === 'completed' ? 'trophy' : 'play'} />
             <span>
-              <strong>{game.status === 'completed' ? hi.game.seeResults : hi.home.continue}</strong>
-              <span className="small">{hi.home.continueMeta(game.round, game.teams.map((t) => t.name).join(' · '))}</span>
+              <strong>{game.status === 'completed' ? t.game.seeResults : t.home.continue}</strong>
+              <span className="small">{t.home.continueMeta(game.round, game.teams.map((x) => x.name).join(' · '))}</span>
             </span>
           </button>
         )}
-        <button type="button" className="btn primary block lg" onClick={onNew}>
-          <Icon name="plus" /> {hi.home.newGame}
+        <button type="button" className="btn primary block lg shine" onClick={onNew}>
+          <Icon name="plus" /> {t.home.newGame}
         </button>
         <div className="grid-2">
           <button type="button" className="tile" onClick={() => navigate('rules')}>
             <Icon name="book" />
-            {hi.home.howTo}
+            {t.home.howTo}
           </button>
           <button type="button" className="tile" onClick={() => navigate('settings')}>
             <Icon name="settings" />
-            {hi.home.settings}
+            {t.home.settings}
           </button>
         </div>
         <button type="button" className="btn ghost" onClick={() => navigate('decks')}>
-          <Icon name="cards" /> {hi.home.decks}
+          <Icon name="cards" /> {t.home.decks}
         </button>
         {pwa.canInstall && (
           <div className="banner">
             <Icon name="download" />
-            <span className="spacer">{hi.home.installHint}</span>
+            <span className="spacer">{t.home.installHint}</span>
             <button type="button" className="btn primary" onClick={() => void promptInstall()}>
-              {hi.home.install}
+              {t.home.install}
             </button>
           </div>
         )}
@@ -73,9 +140,9 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
 
       {confirmNew && (
         <ConfirmDialog
-          message={hi.home.discardConfirm}
-          confirmLabel={hi.home.newGame}
-          cancelLabel={hi.common.cancel}
+          message={t.home.discardConfirm}
+          confirmLabel={t.home.newGame}
+          cancelLabel={t.common.cancel}
           danger
           onCancel={() => setConfirmNew(false)}
           onConfirm={() => {

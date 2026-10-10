@@ -6,16 +6,25 @@ import { useApp } from '../state/AppContext';
 import type { Route } from '../state/router';
 import { TEAM_COLORS } from '../persistence/repository';
 import type { TeamDraft } from '../persistence/repository';
-import { hi } from '../i18n/hi';
+import { LANGUAGES, useT } from '../i18n';
 import { Icon } from '../ui/Icon';
 import { Segmented, SettingRow, Stepper, Switch, TopBar } from '../ui/controls';
 
-const SUGGESTED_NAMES = ['केसरिया', 'हरियाली', 'नीलांबर', 'गुलाबी', 'सागर', 'सुनहरी'];
 const TIME_PRESETS = [30, 45, 60, 90, 120];
 
+function localiseDefaultName(name: string, suggestions: string[]): string {
+  for (const lang of Object.values(LANGUAGES)) {
+    const i = lang.setup.suggestedNames.indexOf(name);
+    if (i >= 0) return suggestions[i];
+  }
+  return name;
+}
+
 export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boolean }) => void }) {
+  const t = useT();
   const { prefs, updatePrefs, startGame } = useApp();
-  const [teams, setTeams] = useState<TeamDraft[]>(prefs.teams);
+  // Default team names follow the interface language until the players rename them.
+  const [teams, setTeams] = useState<TeamDraft[]>(() => prefs.teams.map((team) => ({ ...team, name: localiseDefaultName(team.name, t.setup.suggestedNames) })));
   const [deckIds, setDeckIds] = useState<string[]>(prefs.deckIds?.filter((id) => DECKS.some((d) => d.id === id)) ?? DECKS.map((d) => d.id));
   const [rules, setRules] = useState<Rules>(prefs.rules);
   const [error, setError] = useState<string | null>(null);
@@ -26,12 +35,12 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
 
   const addTeam = () => {
     if (teams.length >= LIMITS.teams.max) return;
-    const usedColors = new Set(teams.map((t) => t.color));
-    const usedNames = new Set(teams.map((t) => t.name));
+    const usedColors = new Set(teams.map((x) => x.color));
+    const usedNames = new Set(teams.map((x) => x.name));
     setTeams([
       ...teams,
       {
-        name: SUGGESTED_NAMES.find((n) => !usedNames.has(n)) ?? `टीम ${teams.length + 1}`,
+        name: t.setup.suggestedNames.find((n) => !usedNames.has(n)) ?? t.setup.teamFallback(teams.length + 1),
         color: TEAM_COLORS.find((c) => !usedColors.has(c)) ?? TEAM_COLORS[teams.length % TEAM_COLORS.length],
         players: [],
       },
@@ -54,9 +63,9 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
   const totalCards = DECKS.filter((d) => deckIds.includes(d.id)).reduce((n, d) => n + d.cards.length, 0);
 
   const start = () => {
-    const names = teams.map((t) => t.name.trim());
-    if (names.some((n) => !n) || new Set(names).size !== names.length) return setError(hi.setup.errNames);
-    if (deckIds.length === 0) return setError(hi.setup.errDecks);
+    const names = teams.map((x) => x.name.trim());
+    if (names.some((n) => !n) || new Set(names).size !== names.length) return setError(t.setup.errNames);
+    if (deckIds.length === 0) return setError(t.setup.errDecks);
     try {
       updatePrefs({ teams, deckIds, rules });
       startGame({ teams, deckIds, rules });
@@ -70,20 +79,20 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
 
   return (
     <main className="screen">
-      <TopBar title={hi.setup.title} onBack={() => navigate('home')} />
+      <TopBar title={t.setup.title} onBack={() => navigate('home')} />
 
-      <h2 className="section-title">{hi.setup.teams}</h2>
-      {teams.map((t, i) => (
-        <section key={i} className="panel team-edit stack" style={{ ['--c' as string]: t.color }} aria-label={`${hi.common.team} ${i + 1}`}>
+      <h2 className="section-title">{t.setup.teams}</h2>
+      {teams.map((team, i) => (
+        <section key={i} className="panel team-edit stack" style={{ ['--c' as string]: team.color }} aria-label={`${t.common.team} ${i + 1}`}>
           <div className="row">
             <div className="field" style={{ flex: 1 }}>
               <label htmlFor={`team-${i}`}>
-                {hi.setup.teamName} {i + 1}
+                {t.setup.teamName} {i + 1}
               </label>
               <input
                 id={`team-${i}`}
                 className="input"
-                value={t.name}
+                value={team.name}
                 maxLength={24}
                 onChange={(e) => {
                   setTeam(i, { name: e.target.value });
@@ -92,29 +101,29 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
               />
             </div>
             {teams.length > LIMITS.teams.min && (
-              <button type="button" className="icon-btn" style={{ alignSelf: 'flex-end' }} onClick={() => removeTeam(i)} aria-label={`${hi.setup.removeTeam}: ${t.name}`}>
+              <button type="button" className="icon-btn" style={{ alignSelf: 'flex-end' }} onClick={() => removeTeam(i)} aria-label={`${t.setup.removeTeam}: ${team.name}`}>
                 <Icon name="trash" />
               </button>
             )}
           </div>
-          <div className="swatches" role="group" aria-label="रंग">
-            {TEAM_COLORS.map((c) => (
-              <button type="button" key={c} className="swatch" style={{ background: c }} aria-pressed={t.color === c} aria-label={`रंग ${c}`} onClick={() => setTeam(i, { color: c })} />
+          <div className="swatches" role="group" aria-label={t.setup.colors}>
+            {TEAM_COLORS.map((c, ci) => (
+              <button type="button" key={c} className="swatch" style={{ background: c }} aria-pressed={team.color === c} aria-label={t.setup.color(ci + 1)} onClick={() => setTeam(i, { color: c })} />
             ))}
           </div>
           <details>
             <summary className="label" style={{ cursor: 'pointer', minHeight: 32 }}>
-              {hi.setup.players} {t.players.length > 0 && `· ${t.players.length}`}
+              {t.setup.players} {team.players.length > 0 && `· ${team.players.length}`}
             </summary>
             <p className="muted small" style={{ margin: '4px 0 8px' }}>
-              {hi.setup.playersHint}
+              {t.setup.playersHint}
             </p>
-            {t.players.length > 0 && (
+            {team.players.length > 0 && (
               <div className="chips" style={{ marginBottom: 8 }}>
-                {t.players.map((p, k) => (
+                {team.players.map((p, k) => (
                   <span className="chip" key={k}>
                     {p}
-                    <button type="button" aria-label={`${hi.setup.removePlayer}: ${p}`} onClick={() => setTeam(i, { players: t.players.filter((_, m) => m !== k) })}>
+                    <button type="button" aria-label={`${t.setup.removePlayer}: ${p}`} onClick={() => setTeam(i, { players: team.players.filter((_, m) => m !== k) })}>
                       <Icon name="close" className="icon" />
                     </button>
                   </span>
@@ -130,13 +139,13 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
             >
               <input
                 className="input"
-                aria-label={hi.setup.playerName}
-                placeholder={hi.setup.playerName}
+                aria-label={t.setup.playerName}
+                placeholder={t.setup.playerName}
                 maxLength={24}
                 value={playerDrafts[i] ?? ''}
                 onChange={(e) => setPlayerDrafts((d) => d.map((x, j) => (j === i ? e.target.value : x)))}
               />
-              <button type="submit" className="icon-btn" aria-label={hi.setup.addPlayer}>
+              <button type="submit" className="icon-btn" aria-label={t.setup.addPlayer}>
                 <Icon name="plus" />
               </button>
             </form>
@@ -145,11 +154,11 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
       ))}
       {teams.length < LIMITS.teams.max && (
         <button type="button" className="btn secondary block" onClick={addTeam}>
-          <Icon name="plus" /> {hi.setup.addTeam}
+          <Icon name="plus" /> {t.setup.addTeam}
         </button>
       )}
 
-      <h2 className="section-title">{hi.setup.decks}</h2>
+      <h2 className="section-title">{t.setup.decks}</h2>
       <div className="stack">
         {DECKS.map((d) => (
           <label key={d.id} className="check-card">
@@ -157,46 +166,46 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
             <span style={{ flex: 1 }}>
               <strong>{d.title}</strong>
               <br />
-              <span className="muted small">{hi.setup.cards(d.cards.length)}</span>
+              <span className="muted small">{t.setup.cards(d.cards.length)}</span>
             </span>
           </label>
         ))}
         <p className="muted small" style={{ margin: 0 }}>
-          {hi.decks.total(totalCards)}
+          {t.decks.total(totalCards)}
         </p>
       </div>
 
-      <h2 className="section-title">{hi.setup.rules}</h2>
+      <h2 className="section-title">{t.setup.rules}</h2>
       <section className="panel stack">
         <div className="field">
-          <span className="label">{hi.setup.turnTime}</span>
+          <span className="label">{t.setup.turnTime}</span>
           <Segmented
-            label={hi.setup.turnTime}
+            label={t.setup.turnTime}
             options={[...new Set([...TIME_PRESETS, rules.turnSeconds])].sort((a, b) => a - b).map((s) => ({ value: s, label: `${s}s` }))}
             value={rules.turnSeconds}
             onChange={(v) => setRule('turnSeconds', v)}
           />
         </div>
         <div className="field">
-          <span className="label">{hi.setup.endBy}</span>
+          <span className="label">{t.setup.endBy}</span>
           <Segmented
-            label={hi.setup.endBy}
+            label={t.setup.endBy}
             options={[
-              { value: 'rounds', label: hi.setup.byRounds },
-              { value: 'score', label: hi.setup.byScore },
+              { value: 'rounds', label: t.setup.byRounds },
+              { value: 'score', label: t.setup.byScore },
             ]}
             value={end.type}
             onChange={(v) => setRule('endCondition', v === 'rounds' ? { type: 'rounds', rounds: 3 } : { type: 'score', target: 20 })}
           />
         </div>
         {end.type === 'rounds' ? (
-          <SettingRow label={hi.setup.rounds}>
-            <Stepper label={hi.setup.rounds} value={end.rounds} min={LIMITS.rounds.min} max={LIMITS.rounds.max} onChange={(v) => setRule('endCondition', { type: 'rounds', rounds: v })} />
+          <SettingRow label={t.setup.rounds}>
+            <Stepper label={t.setup.rounds} value={end.rounds} min={LIMITS.rounds.min} max={LIMITS.rounds.max} onChange={(v) => setRule('endCondition', { type: 'rounds', rounds: v })} />
           </SettingRow>
         ) : (
-          <SettingRow label={hi.setup.targetScore}>
+          <SettingRow label={t.setup.targetScore}>
             <Stepper
-              label={hi.setup.targetScore}
+              label={t.setup.targetScore}
               value={end.target}
               min={LIMITS.targetScore.min}
               max={LIMITS.targetScore.max}
@@ -205,21 +214,21 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
             />
           </SettingRow>
         )}
-        <SettingRow label={hi.setup.pointsCorrect}>
-          <Stepper label={hi.setup.pointsCorrect} value={rules.pointsCorrect} min={1} max={LIMITS.points.max} onChange={(v) => setRule('pointsCorrect', v)} />
+        <SettingRow label={t.setup.pointsCorrect}>
+          <Stepper label={t.setup.pointsCorrect} value={rules.pointsCorrect} min={1} max={LIMITS.points.max} onChange={(v) => setRule('pointsCorrect', v)} />
         </SettingRow>
-        <SettingRow label={hi.setup.violationPenalty}>
-          <Stepper label={hi.setup.violationPenalty} value={rules.violationPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('violationPenalty', v)} />
+        <SettingRow label={t.setup.violationPenalty}>
+          <Stepper label={t.setup.violationPenalty} value={rules.violationPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('violationPenalty', v)} />
         </SettingRow>
-        <SettingRow label={hi.setup.violationToOpponents}>
-          <Switch label={hi.setup.violationToOpponents} checked={rules.violationRecipient === 'opponents'} onChange={(v) => setRule('violationRecipient', v ? 'opponents' : 'none')} />
+        <SettingRow label={t.setup.violationToOpponents}>
+          <Switch label={t.setup.violationToOpponents} checked={rules.violationRecipient === 'opponents'} onChange={(v) => setRule('violationRecipient', v ? 'opponents' : 'none')} />
         </SettingRow>
-        <SettingRow label={hi.setup.skipPenalty}>
-          <Stepper label={hi.setup.skipPenalty} value={rules.skipPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('skipPenalty', v)} />
+        <SettingRow label={t.setup.skipPenalty}>
+          <Stepper label={t.setup.skipPenalty} value={rules.skipPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('skipPenalty', v)} />
         </SettingRow>
-        <SettingRow label={hi.setup.maxSkips}>
+        <SettingRow label={t.setup.maxSkips}>
           <Stepper
-            label={hi.setup.maxSkips}
+            label={t.setup.maxSkips}
             value={rules.maxSkipsPerTurn ?? LIMITS.maxSkips.max + 1}
             min={0}
             max={LIMITS.maxSkips.max + 1}
@@ -227,11 +236,11 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
             onChange={(v) => setRule('maxSkipsPerTurn', v > LIMITS.maxSkips.max ? null : v)}
           />
         </SettingRow>
-        <SettingRow label={hi.setup.recycleSkipped}>
-          <Switch label={hi.setup.recycleSkipped} checked={rules.recycleSkipped} onChange={(v) => setRule('recycleSkipped', v)} />
+        <SettingRow label={t.setup.recycleSkipped}>
+          <Switch label={t.setup.recycleSkipped} checked={rules.recycleSkipped} onChange={(v) => setRule('recycleSkipped', v)} />
         </SettingRow>
         <button type="button" className="btn ghost" onClick={() => setRules(DEFAULT_RULES)}>
-          <Icon name="refresh" /> {hi.setup.resetRules}
+          <Icon name="refresh" /> {t.setup.resetRules}
         </button>
       </section>
 
@@ -242,7 +251,7 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
           </div>
         )}
         <button type="button" className="btn primary block lg" onClick={start}>
-          <Icon name="play" /> {hi.setup.start}
+          <Icon name="play" /> {t.setup.start}
         </button>
       </div>
     </main>

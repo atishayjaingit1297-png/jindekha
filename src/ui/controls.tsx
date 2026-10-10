@@ -1,13 +1,15 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Icon } from './Icon';
+import { useT } from '../i18n';
 import type { IconName } from './Icon';
 
-export function TopBar({ title, onBack, backLabel = 'वापस', children }: { title: string; onBack?: () => void; backLabel?: string; children?: ReactNode }) {
+export function TopBar({ title, onBack, backLabel, children }: { title: string; onBack?: () => void; backLabel?: string; children?: ReactNode }) {
+  const t = useT();
   return (
     <header className="topbar">
       {onBack && (
-        <button type="button" className="icon-btn" onClick={onBack} aria-label={backLabel}>
+        <button type="button" className="icon-btn" onClick={onBack} aria-label={backLabel ?? t.common.back}>
           <Icon name="back" />
         </button>
       )}
@@ -42,13 +44,14 @@ export function Stepper({
   label: string;
   format?: (v: number) => string;
 }) {
+  const t = useT();
   return (
     <div className="stepper" role="group" aria-label={label}>
-      <button type="button" onClick={() => onChange(Math.max(min, value - step))} disabled={value <= min} aria-label={`${label} घटाएँ`}>
+      <button type="button" onClick={() => onChange(Math.max(min, value - step))} disabled={value <= min} aria-label={t.controls.decrease(label)}>
         −
       </button>
       <output aria-live="polite">{format(value)}</output>
-      <button type="button" onClick={() => onChange(Math.min(max, value + step))} disabled={value >= max} aria-label={`${label} बढ़ाएँ`}>
+      <button type="button" onClick={() => onChange(Math.min(max, value + step))} disabled={value >= max} aria-label={t.controls.increase(label)}>
         +
       </button>
     </div>
@@ -79,7 +82,7 @@ export function Segmented<T extends string | number>({
   onChange,
   label,
 }: {
-  options: { value: T; label: string }[];
+  options: { value: T; label: string; icon?: IconName; lang?: string }[];
   value: T;
   onChange: (v: T) => void;
   label: string;
@@ -87,7 +90,8 @@ export function Segmented<T extends string | number>({
   return (
     <div className="segmented" role="group" aria-label={label}>
       {options.map((o) => (
-        <button type="button" key={String(o.value)} aria-pressed={o.value === value} onClick={() => onChange(o.value)}>
+        <button type="button" key={String(o.value)} aria-pressed={o.value === value} onClick={() => onChange(o.value)} lang={o.lang}>
+          {o.icon && <Icon name={o.icon} />}
           {o.label}
         </button>
       ))}

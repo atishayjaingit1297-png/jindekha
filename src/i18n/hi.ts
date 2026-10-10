@@ -1,5 +1,8 @@
-// All interface text lives here so another language can be added without touching screens.
+// All interface text lives here; en.ts mirrors every key. Card words come from the decks and are not translated.
+// `**text**` marks bold inside longer paragraphs (rendered by <Rich>).
 export const hi = {
+  lang: 'hi',
+  langName: 'हिन्दी',
   appName: 'जिनदेखा',
   appNameLatin: 'Jin-Dekha',
   tagline: 'जिनदेखा, तिन पाइयाँ',
@@ -16,6 +19,10 @@ export const hi = {
     offline: 'ऑफ़लाइन — खेल चालू रहेगा',
     installHint: 'ऐप की तरह इंस्टॉल करें',
     install: 'इंस्टॉल',
+    toDark: 'डार्क मोड चालू करें',
+    toLight: 'लाइट मोड चालू करें',
+    switchLang: 'Switch to English',
+    otherLangShort: 'EN',
   },
 
   setup: {
@@ -24,6 +31,8 @@ export const hi = {
     addTeam: 'टीम जोड़ें',
     removeTeam: 'टीम हटाएँ',
     teamName: 'टीम का नाम',
+    colors: 'रंग',
+    color: (n: number) => `रंग ${n}`,
     players: 'खिलाड़ी (वैकल्पिक)',
     playersHint: 'नाम डालें तो बताने वाला अपने-आप बदलता रहेगा',
     addPlayer: 'खिलाड़ी जोड़ें',
@@ -50,17 +59,21 @@ export const hi = {
     errNames: 'हर टीम का नाम अलग और भरा होना चाहिए',
     errDecks: 'कम से कम एक कार्ड-संग्रह चुनें',
     resetRules: 'नियम डिफ़ॉल्ट करें',
+    suggestedNames: ['केसरिया', 'हरियाली', 'नीलांबर', 'गुलाबी', 'सागर', 'सुनहरी'],
+    teamFallback: (n: number) => `टीम ${n}`,
   },
 
   game: {
     round: (r: number) => `राउंड ${r}`,
     turnOf: 'अब बारी है',
+    turnAria: (team: string) => `${team} की बारी`,
     describer: 'बताएँगे',
     describerAny: 'टीम से कोई एक बताएगा',
     guessers: 'बाकी टीम अनुमान लगाएगी',
     readyHelp: 'फ़ोन बताने वाले को दें। बाकी टीम स्क्रीन न देखे। विरोधी टीम मना शब्दों पर नज़र रखे।',
     start: 'शुरू करें',
     time: 'समय',
+    secondsLeft: (n: number) => `समय ${n} सेकंड`,
     forbidden: 'ये शब्द मना हैं',
     correct: 'सही',
     skip: 'छोड़ें',
@@ -106,7 +119,6 @@ export const hi = {
     title: 'परिणाम',
     winner: 'विजेता',
     tie: 'मुकाबला बराबरी पर!',
-    tieBetween: 'बराबरी पर',
     endedRounds: (n: number) => `${n} राउंड पूरे`,
     endedScore: (n: number) => `${n} अंक का लक्ष्य`,
     endedDeck: 'सारे कार्ड खेले जा चुके',
@@ -119,21 +131,28 @@ export const hi = {
     newSetup: 'नई टीमें / नियम',
     home: 'होम',
     share: 'परिणाम साझा करें',
-    shared: 'साझा किया गया',
     copied: 'परिणाम कॉपी हो गया',
     shareText: (lines: string) => `जिनदेखा — परिणाम\n${lines}\nजिनदेखा, तिन पाइयाँ`,
   },
 
   score: {
     title: 'स्कोरबोर्ड',
-    points: 'अंक',
     history: 'बारी-दर-बारी',
     close: 'बंद करें',
     noHistory: 'अभी कोई बारी पूरी नहीं हुई',
+    place: (n: number) => `स्थान ${n}`,
   },
 
   settings: {
     title: 'सेटिंग्स',
+    appearance: 'दिखावट',
+    theme: 'थीम',
+    themeSystem: 'फ़ोन जैसा',
+    themeLight: 'लाइट',
+    themeDark: 'डार्क',
+    language: 'भाषा',
+    languageNote: 'कार्ड के शब्द हिन्दी में ही रहते हैं — वे मूल PDF से लिए गए हैं।',
+    gameplay: 'खेल',
     sound: 'ध्वनि',
     haptics: 'कंपन (जहाँ फ़ोन समर्थन करे)',
     keepAwake: 'खेलते समय स्क्रीन जगी रहे',
@@ -151,16 +170,47 @@ export const hi = {
   decks: {
     title: 'कार्ड-संग्रह',
     source: 'स्रोत',
-    sample: 'उदाहरण',
     total: (n: number) => `कुल ${n} कार्ड`,
+    showAll: 'सभी कार्ड देखें (आयोजकों के लिए — खिलाड़ी न देखें)',
+  },
+
+  howTo: {
+    gistTitle: 'खेल का सार',
+    gist:
+      'दो या अधिक टीमें बारी-बारी से खेलती हैं। हर बारी में टीम का एक खिलाड़ी कार्ड पर लिखा **मुख्य शब्द** अपनी टीम को समझाता है — पर कार्ड पर लिखे **मना शब्द** और मुख्य शब्द खुद बोले बिना। टीम समय खत्म होने से पहले जितने शब्द पहचान ले, उतने अंक।',
+    exampleCard: 'उदाहरण कार्ड',
+    turnTitle: 'एक बारी',
+    steps: [
+      'फ़ोन बताने वाले खिलाड़ी को दें; उसकी टीम स्क्रीन न देखे।',
+      '“शुरू करें” दबाते ही समय चलने लगता है।',
+      'टीम सही अनुमान लगाए तो **सही** दबाएँ, कठिन लगे तो **छोड़ें**।',
+      'बताने वाला कोई मना शब्द (या मुख्य शब्द) बोल दे तो **मना शब्द** दबाएँ — विरोधी टीम इसी पर नज़र रखती है। ऐप बोले गए शब्द खुद नहीं सुनता; यह निर्णय खिलाड़ियों का है।',
+      'इशारे, अक्षर गिनना, “पहला अक्षर…” या दूसरी भाषा में अनुवाद करना मना है।',
+      'समय खत्म होने पर बारी का हिसाब दिखता है। गलती से गलत बटन दबा हो तो वहीं सुधारें, फिर अगली टीम।',
+    ],
+    rulesTitle: 'अभी के नियम',
+    ruleTurn: (s: number) => `हर बारी: ${s} सेकंड`,
+    ruleCorrect: (n: number) => `सही उत्तर: +${n}`,
+    ruleViolation: (n: number, toOthers: boolean) => `मना शब्द: −${n}${toOthers ? ` (और हर विरोधी टीम को +${n})` : ''}`,
+    ruleSkip: (penalty: number, max: number | null) =>
+      `छोड़ना: ${penalty ? `−${penalty}` : 'कोई कटौती नहीं'}${max !== null ? ` · हर बारी में अधिकतम ${max}` : ''}`,
+    ruleRecycle: (on: boolean): string => (on ? 'छोड़े गए कार्ड बाद में फिर आ सकते हैं' : 'एक खेल में कोई कार्ड दोबारा नहीं आता'),
+    ruleEndRounds: (n: number) => `खेल का अंत: ${n} राउंड के बाद`,
+    ruleEndScore: (n: number) => `खेल का अंत: किसी टीम के ${n} अंक होने पर — उसी राउंड के अंत में, ताकि सबको बराबर बारियाँ मिलें`,
+    ruleTimeout: 'समय पूरा होने पर स्क्रीन पर बचा कार्ड बिना अंक के चला जाता है।',
+    rulePause: 'ऐप से बाहर जाने या फ़ोन लॉक होने पर समय अपने-आप रुक जाता है।',
+    note: 'ये नियम “नया खेल” में बदले जा सकते हैं। एक राउंड = हर टीम की एक बारी। बराबर अंक होने पर मुकाबला बराबरी पर माना जाता है।',
+  },
+
+  controls: {
+    decrease: (label: string) => `${label} घटाएँ`,
+    increase: (label: string) => `${label} बढ़ाएँ`,
   },
 
   common: {
     back: 'वापस',
     yes: 'हाँ',
-    no: 'नहीं',
     cancel: 'रद्द करें',
-    ok: 'ठीक है',
     team: 'टीम',
     pts: (n: number) => `${n} अंक`,
   },

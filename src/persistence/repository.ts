@@ -8,8 +8,13 @@ export interface TeamDraft {
   players: string[];
 }
 
+export type ThemePref = 'system' | 'light' | 'dark';
+export type LanguagePref = 'hi' | 'en';
+
 export interface Prefs {
   version: 1;
+  theme: ThemePref;
+  language: LanguagePref;
   sound: boolean;
   haptics: boolean;
   keepAwake: boolean;
@@ -23,6 +28,8 @@ export const TEAM_COLORS = ['#AD540A', '#2F6B4F', '#3D4E9C', '#B03A4E', '#0F7C86
 
 export const DEFAULT_PREFS: Prefs = {
   version: 1,
+  theme: 'system',
+  language: 'hi',
   sound: true,
   haptics: true,
   keepAwake: true,
@@ -51,6 +58,8 @@ export function sanitizePrefs(raw: unknown): Prefs {
   const p = raw as Partial<Prefs>;
   return {
     version: 1,
+    theme: p.theme === 'light' || p.theme === 'dark' ? p.theme : 'system',
+    language: p.language === 'en' ? 'en' : 'hi',
     sound: typeof p.sound === 'boolean' ? p.sound : DEFAULT_PREFS.sound,
     haptics: typeof p.haptics === 'boolean' ? p.haptics : DEFAULT_PREFS.haptics,
     keepAwake: typeof p.keepAwake === 'boolean' ? p.keepAwake : DEFAULT_PREFS.keepAwake,

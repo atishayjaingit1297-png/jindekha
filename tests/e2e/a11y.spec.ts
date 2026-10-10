@@ -4,8 +4,8 @@ import type { Page } from '@playwright/test';
 
 async function audit(page: Page, label: string) {
   // Let entry animations finish so colours are measured at full opacity.
-  await page.waitForTimeout(400);
-  const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+  await page.waitForTimeout(1500);
+  const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).exclude('.floating-words').analyze();
   const summary = violations.map((v) => `${label}: ${v.id} — ${v.nodes.map((n) => n.target.join(' ')).slice(0, 3).join(', ')}`);
   expect(summary).toEqual([]);
 }

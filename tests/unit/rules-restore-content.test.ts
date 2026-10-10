@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_RULES, pointsFor, reduce, restoreGame, sanitizeRules, validateDecks } from '../../src/core';
 import decksJson from '../../src/content/generated/decks.json';
 import { act, newGame, run, T0 } from './fixtures';
+import { sanitizePrefs } from '../../src/persistence/repository';
+import { LANGUAGES } from '../../src/i18n';
 
 describe('rules', () => {
   it('repairs out-of-range and missing values', () => {
@@ -106,5 +108,21 @@ describe('bundled content', () => {
     expect(validateDecks({}).errors.length).toBeGreaterThan(0);
     const bad = { schemaVersion: 1, decks: [{ id: 'x', title: 'X', cards: [{ id: 'x-1', deckId: 'x', target: '', forbidden: [], source: { page: 1 } }] }] };
     expect(validateDecks(bad).decks[0].cards).toHaveLength(0);
+  });
+});
+
+describe('prefs and translations', () => {
+  it('defaults theme and language and repairs bad values', () => {
+    expect(sanitizePrefs({})).toMatchObject({ theme: 'system', language: 'hi' });
+    expect(sanitizePrefs({ theme: 'neon', language: 'fr' })).toMatchObject({ theme: 'system', language: 'hi' });
+    expect(sanitizePrefs({ theme: 'dark', language: 'en' })).toMatchObject({ theme: 'dark', language: 'en' });
+  });
+
+  it('English has every string Hindi has', () => {
+    const keys = (o: object, p = ''): string[] =>
+      Object.entries(o).flatMap(([k, v]) => (v && typeof v === 'object' && !Array.isArray(v) ? keys(v, `${p}${k}.`) : [`${p}${k}`]));
+    expect(keys(LANGUAGES.en).sort()).toEqual(keys(LANGUAGES.hi).sort());
+    expect(LANGUAGES.en.howTo.steps).toHaveLength(LANGUAGES.hi.howTo.steps.length);
+    expect(LANGUAGES.en.setup.suggestedNames).toHaveLength(LANGUAGES.hi.setup.suggestedNames.length);
   });
 });

@@ -25,10 +25,12 @@ src/
   platform/      haptics, sound, wake lock, share — behind the `Platform` interface
   state/         AppContext (glue: engine ⇄ persistence ⇄ platform), hash router, countdown hook
   pwa/           service-worker registration, update prompt, install prompt, online status
-  i18n/          all UI strings (Hindi)
+  i18n/          all UI strings: hi.ts (source of keys) and en.ts (typed against it); useT() picks one from prefs
   ui/            design-system components (buttons, steppers, sheets, standings, icons, logo)
   screens/       Home, Setup, HowToPlay, Settings, Decks, game/* (Ready, Play, Review, RoundSummary, Results, Scoreboard)
 ```
+
+Theming: every colour is a CSS custom property on `:root`. Dark values are redefined under `prefers-color-scheme: dark` (unless `data-theme="light"`) and under `[data-theme="dark"]`, so System, Light and Dark all work.
 
 Rules for contributors:
 

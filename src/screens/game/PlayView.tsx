@@ -4,7 +4,7 @@ import type { Outcome } from '../../core';
 import { CARD_BY_ID } from '../../content';
 import { useApp } from '../../state/AppContext';
 import { useCountdown } from '../../state/useCountdown';
-import { hi } from '../../i18n/hi';
+import { useT } from '../../i18n';
 import { Icon } from '../../ui/Icon';
 import { ConfirmDialog, IconButton, Sheet } from '../../ui/controls';
 import { TeamChip } from '../../ui/TeamBits';
@@ -19,6 +19,7 @@ function formatTime(ms: number) {
 }
 
 export function PlayView({ navigate, openScoreboard }: GameViewProps) {
+  const t = useT();
   const { game, dispatch } = useApp();
   const [feedback, setFeedback] = useState<{ kind: Outcome; text: string; key: number } | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
@@ -32,7 +33,7 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
       if (!g || g.status !== 'active' || !cardId) return;
       if (!dispatch({ type, cardId, now: Date.now() })) return;
       const pts = pointsFor(OUTCOME[type], g.rules).own;
-      const text = pts > 0 ? `+${pts}` : pts < 0 ? `−${-pts}` : hi.outcome[OUTCOME[type]];
+      const text = pts > 0 ? `+${pts}` : pts < 0 ? `−${-pts}` : t.outcome[OUTCOME[type]];
       setFeedback({ kind: OUTCOME[type], text, key: Date.now() });
       window.clearTimeout(fbTimer.current);
       fbTimer.current = window.setTimeout(() => setFeedback(null), 800);
@@ -71,16 +72,16 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
   const pause = () => dispatch({ type: 'PAUSE', now: Date.now() });
 
   return (
-    <main className="screen play" aria-label={`${team.name} की बारी`}>
+    <main className="screen play" aria-label={t.game.turnAria(team.name)}>
       <header className="status-line">
         <TeamChip team={team} />
         <span className="score-pill">
-          {hi.game.turnShort} {turnPoints >= 0 ? `+${turnPoints}` : `−${-turnPoints}`} · {hi.game.totalShort} {getScores(game)[team.id]}
+          {t.game.turnShort} {turnPoints >= 0 ? `+${turnPoints}` : `−${-turnPoints}`} · {t.game.totalShort} {getScores(game)[team.id]}
         </span>
-        <IconButton icon="pause" label={hi.game.pause} onClick={pause} />
+        <IconButton icon="pause" label={t.game.pause} onClick={pause} />
       </header>
 
-      <div className={`timer ${warn ? 'warn' : ''}`} role="timer" aria-label={`${hi.game.time} ${Math.ceil(left / 1000)} सेकंड`}>
+      <div className={`timer ${warn ? 'warn' : ''}`} role="timer" aria-label={t.game.secondsLeft(Math.ceil(left / 1000))}>
         <div className="fill" style={{ width: `${(left / total) * 100}%` }} />
         <span className="digits">{formatTime(left)}</span>
       </div>
@@ -89,11 +90,11 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
         {card && !paused && (
           <article className="word-card" key={card.id} aria-live="polite">
             <div className="target">
-              <div className="label">{hi.game.explain}</div>
+              <div className="label">{t.game.explain}</div>
               <h2 lang="hi">{card.target}</h2>
             </div>
             <div className="forbidden">
-              <div className="label">⛔ {hi.game.forbidden}</div>
+              <div className="label">⛔ {t.game.forbidden}</div>
               <ul>
                 {card.forbidden.map((w) => (
                   <li key={w} lang="hi">
@@ -109,16 +110,16 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
       <div className="actions">
         <button type="button" className="action violation" onClick={() => act('VIOLATION')} disabled={paused}>
           <Icon name="alert" />
-          {hi.game.violation}
+          {t.game.violation}
         </button>
         <button type="button" className="action skip" onClick={() => act('SKIP')} disabled={paused || !canSkip(game)}>
           <Icon name="skip" />
-          {hi.game.skip}
-          {maxSkips !== null && <small>{hi.game.skipsLeft(Math.max(0, maxSkips - skipsUsed(turn)))}</small>}
+          {t.game.skip}
+          {maxSkips !== null && <small>{t.game.skipsLeft(Math.max(0, maxSkips - skipsUsed(turn)))}</small>}
         </button>
         <button type="button" className="action correct" onClick={() => act('CORRECT')} disabled={paused}>
           <Icon name="check" />
-          {hi.game.correct}
+          {t.game.correct}
         </button>
       </div>
 
@@ -137,34 +138,34 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
       )}
 
       {paused && !confirmEnd && (
-        <Sheet title={hi.game.paused} className="pause-sheet">
+        <Sheet title={t.game.paused} className="pause-sheet">
           <p className="muted" style={{ margin: 0 }}>
-            {hi.game.pausedHelp}
+            {t.game.pausedHelp}
           </p>
           <div className="timer" style={{ height: 56 }}>
             <span className="digits">{formatTime(turn.remainingMs)}</span>
           </div>
           <button type="button" className="btn primary block lg" onClick={() => dispatch({ type: 'RESUME', now: Date.now() })} autoFocus>
-            <Icon name="play" /> {hi.game.resume}
+            <Icon name="play" /> {t.game.resume}
           </button>
           <div className="grid-2">
             <button type="button" className="btn secondary" onClick={openScoreboard}>
-              <Icon name="chart" /> {hi.game.scoreboard}
+              <Icon name="chart" /> {t.game.scoreboard}
             </button>
             <button type="button" className="btn secondary" onClick={() => navigate('home')}>
-              <Icon name="home" /> {hi.game.home}
+              <Icon name="home" /> {t.game.home}
             </button>
           </div>
           <button type="button" className="btn danger-text" onClick={() => setConfirmEnd(true)}>
-            {hi.game.endGame}
+            {t.game.endGame}
           </button>
         </Sheet>
       )}
       {confirmEnd && (
         <ConfirmDialog
-          message={hi.game.endGameConfirm}
-          confirmLabel={hi.game.endGame}
-          cancelLabel={hi.common.cancel}
+          message={t.game.endGameConfirm}
+          confirmLabel={t.game.endGame}
+          cancelLabel={t.common.cancel}
           danger
           onCancel={() => setConfirmEnd(false)}
           onConfirm={() => {

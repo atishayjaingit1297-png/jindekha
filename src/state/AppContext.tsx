@@ -153,6 +153,25 @@ export function AppProvider({ children, store, platform: injected }: { children:
     document.documentElement.dataset.textSize = prefs.largeText ? 'large' : 'normal';
   }, [prefs.largeText]);
 
+  useEffect(() => {
+    document.documentElement.lang = prefs.language;
+  }, [prefs.language]);
+
+  // 'system' leaves the attribute off so the CSS follows prefers-color-scheme.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (prefs.theme === 'system') delete root.dataset.theme;
+    else root.dataset.theme = prefs.theme;
+    const media = window.matchMedia?.('(prefers-color-scheme: dark)');
+    const syncMeta = () => {
+      const dark = prefs.theme === 'dark' || (prefs.theme === 'system' && !!media?.matches);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#1A1210' : '#7A1F2B');
+    };
+    syncMeta();
+    media?.addEventListener?.('change', syncMeta);
+    return () => media?.removeEventListener?.('change', syncMeta);
+  }, [prefs.theme]);
+
   const value = useMemo<AppContextValue>(
     () => ({ loaded, game, prefs, dispatch, startGame, rematch, discardGame, updatePrefs, platform, cue }),
     [loaded, game, prefs, dispatch, startGame, rematch, discardGame, updatePrefs, platform, cue],
