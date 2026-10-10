@@ -1,0 +1,19 @@
+{
+  "$comment": "Deck manifest. Add a new deck by adding a TSV in content/source and an entry here, then run `npm run content:build`.",
+  "decks": [
+    {
+      "id": "jt1",
+      "title": "जैन टैबू — भाग १",
+      "source": "content/source/jain-taboo-1.tsv",
+      "sourcePdf": "Jain Taboo 1.pdf",
+      "alsoIn": ["test.pdf (2 cards/page)", "test 2.pdf (multi-card print layout)"]
+    },
+    {
+      "id": "jt2",
+      "title": "जैन टैबू — भाग २",
+      "source": "content/source/jain-taboo-2.tsv",
+      "sourcePdf": "Jain Taboo 2 2.pdf",
+      "alsoIn": []
+    }
+  ]
+}

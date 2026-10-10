@@ -1,0 +1,48 @@
+{
+  "name": "jindekha",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "जिनदेखा (Jin-Dekha) — Jain word-guessing party game PWA",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run content:build && tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "content:build": "node scripts/build-content.mjs",
+    "content:ocr": "bash scripts/ocr-pdf.sh",
+    "icons": "node scripts/generate-icons.mjs",
+    "test:all": "npm run test && npm run build && npm run test:e2e",
+    "build:preview-file": "npm run content:build && vite build --mode preview-file"
+  },
+  "dependencies": {
+    "@fontsource/baloo-2": "^5.3.0",
+    "@fontsource/mukta": "^5.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.56.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "fake-indexeddb": "^6.2.5",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.7",
+    "vite-plugin-pwa": "^2.0.0",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vitest": "^3.2.7",
+    "workbox-window": "^7.4.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

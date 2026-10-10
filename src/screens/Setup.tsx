@@ -1,0 +1,250 @@
+import { useState } from 'react';
+import { DEFAULT_RULES, GameConfigError, LIMITS } from '../core';
+import type { Rules } from '../core';
+import { DECKS } from '../content';
+import { useApp } from '../state/AppContext';
+import type { Route } from '../state/router';
+import { TEAM_COLORS } from '../persistence/repository';
+import type { TeamDraft } from '../persistence/repository';
+import { hi } from '../i18n/hi';
+import { Icon } from '../ui/Icon';
+import { Segmented, SettingRow, Stepper, Switch, TopBar } from '../ui/controls';
+
+const SUGGESTED_NAMES = ['केसरिया', 'हरियाली', 'नीलांबर', 'गुलाबी', 'सागर', 'सुनहरी'];
+const TIME_PRESETS = [30, 45, 60, 90, 120];
+
+export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boolean }) => void }) {
+  const { prefs, updatePrefs, startGame } = useApp();
+  const [teams, setTeams] = useState<TeamDraft[]>(prefs.teams);
+  const [deckIds, setDeckIds] = useState<string[]>(prefs.deckIds?.filter((id) => DECKS.some((d) => d.id === id)) ?? DECKS.map((d) => d.id));
+  const [rules, setRules] = useState<Rules>(prefs.rules);
+  const [error, setError] = useState<string | null>(null);
+  const [playerDrafts, setPlayerDrafts] = useState<string[]>(() => prefs.teams.map(() => ''));
+
+  const setTeam = (i: number, patch: Partial<TeamDraft>) => setTeams((ts) => ts.map((t, j) => (j === i ? { ...t, ...patch } : t)));
+  const setRule = <K extends keyof Rules>(k: K, v: Rules[K]) => setRules((r) => ({ ...r, [k]: v }));
+
+  const addTeam = () => {
+    if (teams.length >= LIMITS.teams.max) return;
+    const usedColors = new Set(teams.map((t) => t.color));
+    const usedNames = new Set(teams.map((t) => t.name));
+    setTeams([
+      ...teams,
+      {
+        name: SUGGESTED_NAMES.find((n) => !usedNames.has(n)) ?? `टीम ${teams.length + 1}`,
+        color: TEAM_COLORS.find((c) => !usedColors.has(c)) ?? TEAM_COLORS[teams.length % TEAM_COLORS.length],
+        players: [],
+      },
+    ]);
+    setPlayerDrafts((d) => [...d, '']);
+  };
+  const removeTeam = (i: number) => {
+    if (teams.length <= LIMITS.teams.min) return;
+    setTeams(teams.filter((_, j) => j !== i));
+    setPlayerDrafts((d) => d.filter((_, j) => j !== i));
+  };
+  const addPlayer = (i: number) => {
+    const name = playerDrafts[i]?.trim();
+    if (!name) return;
+    setTeam(i, { players: [...teams[i].players, name] });
+    setPlayerDrafts((d) => d.map((x, j) => (j === i ? '' : x)));
+  };
+
+  const toggleDeck = (id: string) => setDeckIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
+  const totalCards = DECKS.filter((d) => deckIds.includes(d.id)).reduce((n, d) => n + d.cards.length, 0);
+
+  const start = () => {
+    const names = teams.map((t) => t.name.trim());
+    if (names.some((n) => !n) || new Set(names).size !== names.length) return setError(hi.setup.errNames);
+    if (deckIds.length === 0) return setError(hi.setup.errDecks);
+    try {
+      updatePrefs({ teams, deckIds, rules });
+      startGame({ teams, deckIds, rules });
+      navigate('game', { replace: true });
+    } catch (e) {
+      setError(e instanceof GameConfigError ? e.message : String(e));
+    }
+  };
+
+  const end = rules.endCondition;
+
+  return (
+    <main className="screen">
+      <TopBar title={hi.setup.title} onBack={() => navigate('home')} />
+
+      <h2 className="section-title">{hi.setup.teams}</h2>
+      {teams.map((t, i) => (
+        <section key={i} className="panel team-edit stack" style={{ ['--c' as string]: t.color }} aria-label={`${hi.common.team} ${i + 1}`}>
+          <div className="row">
+            <div className="field" style={{ flex: 1 }}>
+              <label htmlFor={`team-${i}`}>
+                {hi.setup.teamName} {i + 1}
+              </label>
+              <input
+                id={`team-${i}`}
+                className="input"
+                value={t.name}
+                maxLength={24}
+                onChange={(e) => {
+                  setTeam(i, { name: e.target.value });
+                  setError(null);
+                }}
+              />
+            </div>
+            {teams.length > LIMITS.teams.min && (
+              <button type="button" className="icon-btn" style={{ alignSelf: 'flex-end' }} onClick={() => removeTeam(i)} aria-label={`${hi.setup.removeTeam}: ${t.name}`}>
+                <Icon name="trash" />
+              </button>
+            )}
+          </div>
+          <div className="swatches" role="group" aria-label="रंग">
+            {TEAM_COLORS.map((c) => (
+              <button type="button" key={c} className="swatch" style={{ background: c }} aria-pressed={t.color === c} aria-label={`रंग ${c}`} onClick={() => setTeam(i, { color: c })} />
+            ))}
+          </div>
+          <details>
+            <summary className="label" style={{ cursor: 'pointer', minHeight: 32 }}>
+              {hi.setup.players} {t.players.length > 0 && `· ${t.players.length}`}
+            </summary>
+            <p className="muted small" style={{ margin: '4px 0 8px' }}>
+              {hi.setup.playersHint}
+            </p>
+            {t.players.length > 0 && (
+              <div className="chips" style={{ marginBottom: 8 }}>
+                {t.players.map((p, k) => (
+                  <span className="chip" key={k}>
+                    {p}
+                    <button type="button" aria-label={`${hi.setup.removePlayer}: ${p}`} onClick={() => setTeam(i, { players: t.players.filter((_, m) => m !== k) })}>
+                      <Icon name="close" className="icon" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            <form
+              className="row"
+              onSubmit={(e) => {
+                e.preventDefault();
+                addPlayer(i);
+              }}
+            >
+              <input
+                className="input"
+                aria-label={hi.setup.playerName}
+                placeholder={hi.setup.playerName}
+                maxLength={24}
+                value={playerDrafts[i] ?? ''}
+                onChange={(e) => setPlayerDrafts((d) => d.map((x, j) => (j === i ? e.target.value : x)))}
+              />
+              <button type="submit" className="icon-btn" aria-label={hi.setup.addPlayer}>
+                <Icon name="plus" />
+              </button>
+            </form>
+          </details>
+        </section>
+      ))}
+      {teams.length < LIMITS.teams.max && (
+        <button type="button" className="btn secondary block" onClick={addTeam}>
+          <Icon name="plus" /> {hi.setup.addTeam}
+        </button>
+      )}
+
+      <h2 className="section-title">{hi.setup.decks}</h2>
+      <div className="stack">
+        {DECKS.map((d) => (
+          <label key={d.id} className="check-card">
+            <input type="checkbox" checked={deckIds.includes(d.id)} onChange={() => toggleDeck(d.id)} />
+            <span style={{ flex: 1 }}>
+              <strong>{d.title}</strong>
+              <br />
+              <span className="muted small">{hi.setup.cards(d.cards.length)}</span>
+            </span>
+          </label>
+        ))}
+        <p className="muted small" style={{ margin: 0 }}>
+          {hi.decks.total(totalCards)}
+        </p>
+      </div>
+
+      <h2 className="section-title">{hi.setup.rules}</h2>
+      <section className="panel stack">
+        <div className="field">
+          <span className="label">{hi.setup.turnTime}</span>
+          <Segmented
+            label={hi.setup.turnTime}
+            options={[...new Set([...TIME_PRESETS, rules.turnSeconds])].sort((a, b) => a - b).map((s) => ({ value: s, label: `${s}s` }))}
+            value={rules.turnSeconds}
+            onChange={(v) => setRule('turnSeconds', v)}
+          />
+        </div>
+        <div className="field">
+          <span className="label">{hi.setup.endBy}</span>
+          <Segmented
+            label={hi.setup.endBy}
+            options={[
+              { value: 'rounds', label: hi.setup.byRounds },
+              { value: 'score', label: hi.setup.byScore },
+            ]}
+            value={end.type}
+            onChange={(v) => setRule('endCondition', v === 'rounds' ? { type: 'rounds', rounds: 3 } : { type: 'score', target: 20 })}
+          />
+        </div>
+        {end.type === 'rounds' ? (
+          <SettingRow label={hi.setup.rounds}>
+            <Stepper label={hi.setup.rounds} value={end.rounds} min={LIMITS.rounds.min} max={LIMITS.rounds.max} onChange={(v) => setRule('endCondition', { type: 'rounds', rounds: v })} />
+          </SettingRow>
+        ) : (
+          <SettingRow label={hi.setup.targetScore}>
+            <Stepper
+              label={hi.setup.targetScore}
+              value={end.target}
+              min={LIMITS.targetScore.min}
+              max={LIMITS.targetScore.max}
+              step={5}
+              onChange={(v) => setRule('endCondition', { type: 'score', target: v })}
+            />
+          </SettingRow>
+        )}
+        <SettingRow label={hi.setup.pointsCorrect}>
+          <Stepper label={hi.setup.pointsCorrect} value={rules.pointsCorrect} min={1} max={LIMITS.points.max} onChange={(v) => setRule('pointsCorrect', v)} />
+        </SettingRow>
+        <SettingRow label={hi.setup.violationPenalty}>
+          <Stepper label={hi.setup.violationPenalty} value={rules.violationPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('violationPenalty', v)} />
+        </SettingRow>
+        <SettingRow label={hi.setup.violationToOpponents}>
+          <Switch label={hi.setup.violationToOpponents} checked={rules.violationRecipient === 'opponents'} onChange={(v) => setRule('violationRecipient', v ? 'opponents' : 'none')} />
+        </SettingRow>
+        <SettingRow label={hi.setup.skipPenalty}>
+          <Stepper label={hi.setup.skipPenalty} value={rules.skipPenalty} min={0} max={LIMITS.points.max} onChange={(v) => setRule('skipPenalty', v)} />
+        </SettingRow>
+        <SettingRow label={hi.setup.maxSkips}>
+          <Stepper
+            label={hi.setup.maxSkips}
+            value={rules.maxSkipsPerTurn ?? LIMITS.maxSkips.max + 1}
+            min={0}
+            max={LIMITS.maxSkips.max + 1}
+            format={(v) => (v > LIMITS.maxSkips.max ? '∞' : String(v))}
+            onChange={(v) => setRule('maxSkipsPerTurn', v > LIMITS.maxSkips.max ? null : v)}
+          />
+        </SettingRow>
+        <SettingRow label={hi.setup.recycleSkipped}>
+          <Switch label={hi.setup.recycleSkipped} checked={rules.recycleSkipped} onChange={(v) => setRule('recycleSkipped', v)} />
+        </SettingRow>
+        <button type="button" className="btn ghost" onClick={() => setRules(DEFAULT_RULES)}>
+          <Icon name="refresh" /> {hi.setup.resetRules}
+        </button>
+      </section>
+
+      <div className="sticky-bottom stack">
+        {error && (
+          <div className="banner" role="alert">
+            <Icon name="alert" /> {error}
+          </div>
+        )}
+        <button type="button" className="btn primary block lg" onClick={start}>
+          <Icon name="play" /> {hi.setup.start}
+        </button>
+      </div>
+    </main>
+  );
+}

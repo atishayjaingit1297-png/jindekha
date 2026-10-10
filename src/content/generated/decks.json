@@ -1,0 +1,1435 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/build-content.mjs",
+  "decks": [
+    {
+      "id": "jt1",
+      "title": "जैन टैबू — भाग १",
+      "sourcePdf": "Jain Taboo 1.pdf",
+      "alsoIn": [
+        "test.pdf (2 cards/page)",
+        "test 2.pdf (multi-card print layout)"
+      ],
+      "cards": [
+        {
+          "id": "jt1-001",
+          "deckId": "jt1",
+          "target": "तत्वार्थ सूत्र",
+          "forbidden": [
+            "उमा स्वामी",
+            "संकृत",
+            "१० अध्याय",
+            "मोक्ष शास्त्र"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 1
+          }
+        },
+        {
+          "id": "jt1-002",
+          "deckId": "jt1",
+          "target": "भरत",
+          "forbidden": [
+            "चक्रवर्ती",
+            "बाहुबली",
+            "आदिनाथ /रिषभदेव",
+            "छः खंड"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 2
+          }
+        },
+        {
+          "id": "jt1-003",
+          "deckId": "jt1",
+          "target": "रत्न करंड श्रावकाचार",
+          "forbidden": [
+            "समंतभद्र स्वामी",
+            "अनुव्रत",
+            "प्रतिमा",
+            "ग्रन्थ"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 3
+          }
+        },
+        {
+          "id": "jt1-004",
+          "deckId": "jt1",
+          "target": "सम्भवनाथ भगवान",
+          "forbidden": [
+            "ज्ञानोदय मंदिर/अपना मंदिर",
+            "घोड़ा",
+            "तीर्थंकर",
+            "वेदी"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 4
+          }
+        },
+        {
+          "id": "jt1-005",
+          "deckId": "jt1",
+          "target": "भगवान राम",
+          "forbidden": [
+            "सीता",
+            "रावण",
+            "लक्ष्मण",
+            "अयोध्या"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 5
+          }
+        },
+        {
+          "id": "jt1-006",
+          "deckId": "jt1",
+          "target": "भगवान महावीर",
+          "forbidden": [
+            "कुंडलपुर",
+            "अंतिम तीर्थंकर",
+            "त्रिशला",
+            "शेर/सिंह"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 6
+          }
+        },
+        {
+          "id": "jt1-007",
+          "deckId": "jt1",
+          "target": "पूजन",
+          "forbidden": [
+            "अष्ट द्रव्य",
+            "स्तुति",
+            "विधान",
+            "थाली"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 7
+          }
+        },
+        {
+          "id": "jt1-008",
+          "deckId": "jt1",
+          "target": "अभिषेक",
+          "forbidden": [
+            "कलश",
+            "धोती-दुपट्टा",
+            "शांतिधारा",
+            "प्रक्षाल"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 8
+          }
+        },
+        {
+          "id": "jt1-009",
+          "deckId": "jt1",
+          "target": "श्रीकृष्ण",
+          "forbidden": [
+            "अर्जुन",
+            "महाभारत",
+            "बांसुरी",
+            "सारथी"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 9
+          }
+        },
+        {
+          "id": "jt1-010",
+          "deckId": "jt1",
+          "target": "तीर्थंकर",
+          "forbidden": [
+            "चौबीस",
+            "कल्याणक",
+            "समवशरण",
+            "सुमेरु"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 10
+          }
+        },
+        {
+          "id": "jt1-011",
+          "deckId": "jt1",
+          "target": "समवशरण",
+          "forbidden": [
+            "दिव्यध्वनि",
+            "बारह सभा",
+            "कुबेर",
+            "गणधर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 11
+          }
+        },
+        {
+          "id": "jt1-012",
+          "deckId": "jt1",
+          "target": "शिखर जी",
+          "forbidden": [
+            "मोक्ष",
+            "वंदना",
+            "तीर्थ",
+            "पार्स्वनाथ"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 12
+          }
+        },
+        {
+          "id": "jt1-013",
+          "deckId": "jt1",
+          "target": "पाठशाला",
+          "forbidden": [
+            "बच्चे",
+            "संस्कार",
+            "जैनधर्म",
+            "ज्ञान"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 13
+          }
+        },
+        {
+          "id": "jt1-014",
+          "deckId": "jt1",
+          "target": "बाहुबली",
+          "forbidden": [
+            "श्रवणबेलगोला",
+            "भरत",
+            "आदिनाथ",
+            "पोदनपुर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 14
+          }
+        },
+        {
+          "id": "jt1-015",
+          "deckId": "jt1",
+          "target": "जिनमन्दिर",
+          "forbidden": [
+            "ज्ञानोदय",
+            "दर्शन",
+            "पूजन",
+            "प्रतिमा"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 15
+          }
+        },
+        {
+          "id": "jt1-016",
+          "deckId": "jt1",
+          "target": "कुण्डलपुर (मोक्ष)",
+          "forbidden": [
+            "महावीर",
+            "मोक्ष",
+            "तीर्थ",
+            "सिद्ध"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 16
+          }
+        },
+        {
+          "id": "jt1-017",
+          "deckId": "jt1",
+          "target": "हस्तिनापुर",
+          "forbidden": [
+            "महाभारत",
+            "पांडव",
+            "कौरव",
+            "ढाई-द्वीप"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 17
+          }
+        },
+        {
+          "id": "jt1-018",
+          "deckId": "jt1",
+          "target": "आचार्य",
+          "forbidden": [
+            "विद्यासागर जी",
+            "समयसागर जी",
+            "३६ मूलगुण",
+            "शास्त्र"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 18
+          }
+        },
+        {
+          "id": "jt1-019",
+          "deckId": "jt1",
+          "target": "कषाय",
+          "forbidden": [
+            "क्रोध",
+            "मान",
+            "माया",
+            "लोभ"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 19
+          }
+        },
+        {
+          "id": "jt1-020",
+          "deckId": "jt1",
+          "target": "पाप",
+          "forbidden": [
+            "हिंसा",
+            "कुशील",
+            "झूठ",
+            "चोरी"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 20
+          }
+        },
+        {
+          "id": "jt1-021",
+          "deckId": "jt1",
+          "target": "भक्तामर स्तोत्र",
+          "forbidden": [
+            "मानतुंग आचार्य",
+            "४८ काव्य",
+            "आदिनाथ भगवान",
+            "ताले"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 21
+          }
+        },
+        {
+          "id": "jt1-022",
+          "deckId": "jt1",
+          "target": "आत्मा",
+          "forbidden": [
+            "भूत",
+            "डर",
+            "रात",
+            "शरीर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 22
+          }
+        },
+        {
+          "id": "jt1-023",
+          "deckId": "jt1",
+          "target": "मंदिर",
+          "forbidden": [
+            "शिखर",
+            "ज्ञानोदय",
+            "सुबह",
+            "दर्शन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 23
+          }
+        },
+        {
+          "id": "jt1-024",
+          "deckId": "jt1",
+          "target": "शास्त्र",
+          "forbidden": [
+            "जिनवाणी",
+            "पढ़ना",
+            "किताब",
+            "लिखना"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 24
+          }
+        },
+        {
+          "id": "jt1-025",
+          "deckId": "jt1",
+          "target": "वासुपूज्य",
+          "forbidden": [
+            "तीर्थंकर",
+            "बारहवें",
+            "चम्पापुर",
+            "भैंस"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 25
+          }
+        },
+        {
+          "id": "jt1-026",
+          "deckId": "jt1",
+          "target": "श्रवणबेलगोला",
+          "forbidden": [
+            "बाहुबली",
+            "हसन",
+            "चामुंडराय",
+            "प्रतिमा"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 26
+          }
+        },
+        {
+          "id": "jt1-027",
+          "deckId": "jt1",
+          "target": "व्रत",
+          "forbidden": [
+            "उपवास",
+            "बारह",
+            "अष्टमी",
+            "पर्व"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 27
+          }
+        },
+        {
+          "id": "jt1-028",
+          "deckId": "jt1",
+          "target": "नरक",
+          "forbidden": [
+            "नीचे",
+            "नारकी",
+            "पाप",
+            "लड़ना"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 28
+          }
+        },
+        {
+          "id": "jt1-029",
+          "deckId": "jt1",
+          "target": "भक्ति",
+          "forbidden": [
+            "गाना",
+            "भजन",
+            "बजाना",
+            "स्तुति"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 29
+          }
+        },
+        {
+          "id": "jt1-030",
+          "deckId": "jt1",
+          "target": "आहार चर्या",
+          "forbidden": [
+            "मुनिराज",
+            "खाना",
+            "भोजन",
+            "अंजुली"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 30
+          }
+        },
+        {
+          "id": "jt1-031",
+          "deckId": "jt1",
+          "target": "सामयिक",
+          "forbidden": [
+            "मौन",
+            "ध्यान",
+            "बैठना",
+            "श्रावक"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 31
+          }
+        },
+        {
+          "id": "jt1-032",
+          "deckId": "jt1",
+          "target": "लोभ",
+          "forbidden": [
+            "कषाय",
+            "पाप",
+            "परिग्रह",
+            "क्रोध"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 32
+          }
+        },
+        {
+          "id": "jt1-033",
+          "deckId": "jt1",
+          "target": "चंदन",
+          "forbidden": [
+            "पूजन",
+            "माथे/सिर",
+            "द्रव्य",
+            "जल"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 33
+          }
+        },
+        {
+          "id": "jt1-034",
+          "deckId": "jt1",
+          "target": "धर्म",
+          "forbidden": [
+            "जैन",
+            "दशलक्षण",
+            "मंदिर",
+            "मुनिराज"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 34
+          }
+        },
+        {
+          "id": "jt1-035",
+          "deckId": "jt1",
+          "target": "प्रतिक्रमण",
+          "forbidden": [
+            "मुनिराज",
+            "३ बार",
+            "आवश्यक",
+            "आचार्य"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 35
+          }
+        },
+        {
+          "id": "jt1-036",
+          "deckId": "jt1",
+          "target": "स्वाध्याय",
+          "forbidden": [
+            "ग्रंथ/ जिनवाणी/पुस्तक",
+            "आवश्यक",
+            "वाचना",
+            "प्रवचन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 36
+          }
+        },
+        {
+          "id": "jt1-037",
+          "deckId": "jt1",
+          "target": "पार्श्वनाथ भगवान",
+          "forbidden": [
+            "सांप",
+            "पद्मावती-धरणेंद्र",
+            "वाराणसी",
+            "तीर्थंकर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 37
+          }
+        },
+        {
+          "id": "jt1-038",
+          "deckId": "jt1",
+          "target": "आर्जव",
+          "forbidden": [
+            "तीसरा",
+            "दशलक्षण",
+            "मायाचारी",
+            "सरल"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 38
+          }
+        },
+        {
+          "id": "jt1-039",
+          "deckId": "jt1",
+          "target": "मोक्ष",
+          "forbidden": [
+            "पंचम गति",
+            "सिद्ध",
+            "पूर्ण सुख",
+            "तीन लोक"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 39
+          }
+        },
+        {
+          "id": "jt1-040",
+          "deckId": "jt1",
+          "target": "द्रव्य",
+          "forbidden": [
+            "छः",
+            "धर्म",
+            "अधर्म",
+            "काल"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 40
+          }
+        },
+        {
+          "id": "jt1-041",
+          "deckId": "jt1",
+          "target": "निगोद",
+          "forbidden": [
+            "एक स्वाँस",
+            "अठारह",
+            "तीन लोक",
+            "वनस्पति"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 41
+          }
+        },
+        {
+          "id": "jt1-042",
+          "deckId": "jt1",
+          "target": "सम्मेद शिखर जी",
+          "forbidden": [
+            "झारखंड",
+            "वंदना",
+            "20",
+            "भगवान पार्श्वनाथ"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 42
+          }
+        },
+        {
+          "id": "jt1-043",
+          "deckId": "jt1",
+          "target": "नय",
+          "forbidden": [
+            "सिद्धांत",
+            "परिप्रेक्ष्य",
+            "दृष्टिकोणों",
+            "प्रमाण"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 43
+          }
+        },
+        {
+          "id": "jt1-044",
+          "deckId": "jt1",
+          "target": "कैवल्य ज्ञान",
+          "forbidden": [
+            "सम्पूर्ण ज्ञान",
+            "केवली",
+            "समवशरण",
+            "तीन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 44
+          }
+        },
+        {
+          "id": "jt1-045",
+          "deckId": "jt1",
+          "target": "अकलंक देव",
+          "forbidden": [
+            "निकलंक",
+            "एक",
+            "वाद विवाद",
+            "2 भाई"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 1.pdf",
+            "page": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": "jt2",
+      "title": "जैन टैबू — भाग २",
+      "sourcePdf": "Jain Taboo 2 2.pdf",
+      "alsoIn": [],
+      "cards": [
+        {
+          "id": "jt2-001",
+          "deckId": "jt2",
+          "target": "२८ मूलगुण",
+          "forbidden": [
+            "मुनिराज",
+            "दिगंबर",
+            "पालन",
+            "आवश्यक"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 1
+          }
+        },
+        {
+          "id": "jt2-002",
+          "deckId": "jt2",
+          "target": "पिच्छी",
+          "forbidden": [
+            "मोरपंख",
+            "जीव रक्षा",
+            "उपकरण",
+            "संयम"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 2
+          }
+        },
+        {
+          "id": "jt2-003",
+          "deckId": "jt2",
+          "target": "कमंडलु",
+          "forbidden": [
+            "शौच",
+            "जल",
+            "उपकरण",
+            "संयम"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 3
+          }
+        },
+        {
+          "id": "jt2-004",
+          "deckId": "jt2",
+          "target": "आचार्य कुन्दकुन्द",
+          "forbidden": [
+            "समयसार",
+            "प्रवचनसार",
+            "पंचास्तिकाय",
+            "परमागम"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 4
+          }
+        },
+        {
+          "id": "jt2-005",
+          "deckId": "jt2",
+          "target": "समयसार",
+          "forbidden": [
+            "आचार्य कुन्दकुन्द",
+            "आत्मा",
+            "निश्चय",
+            "व्यवहार"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 5
+          }
+        },
+        {
+          "id": "jt2-006",
+          "deckId": "jt2",
+          "target": "आहार",
+          "forbidden": [
+            "नवधा भक्ति",
+            "पड़गाहन",
+            "मुनिराज",
+            "भोजन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 6
+          }
+        },
+        {
+          "id": "jt2-007",
+          "deckId": "jt2",
+          "target": "गुप्ति",
+          "forbidden": [
+            "मन",
+            "वचन",
+            "काय",
+            "संवर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 7
+          }
+        },
+        {
+          "id": "jt2-008",
+          "deckId": "jt2",
+          "target": "समिति",
+          "forbidden": [
+            "ईर्या",
+            "भाषा",
+            "एषणा",
+            "आदान-निक्षेपण"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 8
+          }
+        },
+        {
+          "id": "jt2-009",
+          "deckId": "jt2",
+          "target": "चारित्र",
+          "forbidden": [
+            "सम्यक्",
+            "ज्ञान",
+            "दर्शन",
+            "आचरण"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 9
+          }
+        },
+        {
+          "id": "jt2-010",
+          "deckId": "jt2",
+          "target": "निश्चय नय",
+          "forbidden": [
+            "शुद्ध",
+            "आत्मा",
+            "व्यवहार",
+            "उपादान"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 10
+          }
+        },
+        {
+          "id": "jt2-011",
+          "deckId": "jt2",
+          "target": "व्यवहार नय",
+          "forbidden": [
+            "अशुद्ध",
+            "निमित्त",
+            "उपचार",
+            "कथन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 11
+          }
+        },
+        {
+          "id": "jt2-012",
+          "deckId": "jt2",
+          "target": "द्रव्यलिंगी",
+          "forbidden": [
+            "मुनि",
+            "भेष",
+            "भाव",
+            "मोक्षमार्ग"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 12
+          }
+        },
+        {
+          "id": "jt2-013",
+          "deckId": "jt2",
+          "target": "भाव लिंग",
+          "forbidden": [
+            "सम्यग्दर्शन",
+            "परिणाम",
+            "मुनि",
+            "मोक्षमार्ग"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 13
+          }
+        },
+        {
+          "id": "jt2-014",
+          "deckId": "jt2",
+          "target": "षट्खण्डागम",
+          "forbidden": [
+            "धवला",
+            "पुष्पदंत",
+            "भूतबलि",
+            "सिद्धान्त"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 14
+          }
+        },
+        {
+          "id": "jt2-015",
+          "deckId": "jt2",
+          "target": "कषाय पाहुड",
+          "forbidden": [
+            "गुणधर",
+            "जयधवला",
+            "चूर्णिसूत्र",
+            "सिद्धान्त"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 15
+          }
+        },
+        {
+          "id": "jt2-016",
+          "deckId": "jt2",
+          "target": "जीवकाण्ड",
+          "forbidden": [
+            "नेमिचन्द्र",
+            "गोम्मटसार",
+            "सिद्धान्तचक्रवर्ती",
+            "कर्मकाण्ड"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 16
+          }
+        },
+        {
+          "id": "jt2-017",
+          "deckId": "jt2",
+          "target": "प्रथमानुयोग",
+          "forbidden": [
+            "पुराण",
+            "कहानी",
+            "चरित्र",
+            "तीर्थंकर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 17
+          }
+        },
+        {
+          "id": "jt2-018",
+          "deckId": "jt2",
+          "target": "करणानुयोग",
+          "forbidden": [
+            "गणित",
+            "लोक",
+            "गुणस्थान",
+            "कर्म"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 18
+          }
+        },
+        {
+          "id": "jt2-019",
+          "deckId": "jt2",
+          "target": "चरणानुयोग",
+          "forbidden": [
+            "आचरण",
+            "श्रावक",
+            "मुनि",
+            "चारित्र"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 19
+          }
+        },
+        {
+          "id": "jt2-020",
+          "deckId": "jt2",
+          "target": "द्रव्यानुयोग",
+          "forbidden": [
+            "आत्मा",
+            "तत्त्व",
+            "अध्यात्म",
+            "द्रव्य"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 20
+          }
+        },
+        {
+          "id": "jt2-021",
+          "deckId": "jt2",
+          "target": "समाध मरण",
+          "forbidden": [
+            "सल्लेखना",
+            "पंडित मरण",
+            "व्रत",
+            "समाधि"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 21
+          }
+        },
+        {
+          "id": "jt2-022",
+          "deckId": "jt2",
+          "target": "सिद्धचक्र विधान",
+          "forbidden": [
+            "नंदीश्वर",
+            "अष्टान्हिका",
+            "मैनासुन्दरी",
+            "पूजन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 22
+          }
+        },
+        {
+          "id": "jt2-023",
+          "deckId": "jt2",
+          "target": "शांतिधारा",
+          "forbidden": [
+            "अभिषेक",
+            "कलश",
+            "शांति",
+            "मंत्र"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 23
+          }
+        },
+        {
+          "id": "jt2-024",
+          "deckId": "jt2",
+          "target": "बारह भावना",
+          "forbidden": [
+            "अनित्य",
+            "अशरण",
+            "संसार",
+            "वैराग्य"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 24
+          }
+        },
+        {
+          "id": "jt2-025",
+          "deckId": "jt2",
+          "target": "चार गतियाँ",
+          "forbidden": [
+            "नरक",
+            "तिर्यंच",
+            "मनुष्य",
+            "देव"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 25
+          }
+        },
+        {
+          "id": "jt2-026",
+          "deckId": "jt2",
+          "target": "गुणस्थान",
+          "forbidden": [
+            "चौदह",
+            "आत्मा",
+            "विकास",
+            "मोह"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 26
+          }
+        },
+        {
+          "id": "jt2-027",
+          "deckId": "jt2",
+          "target": "श्रुत पंचमी",
+          "forbidden": [
+            "जिनवाणी",
+            "ज्ञान",
+            "ज्येष्ठ",
+            "पूजा"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 27
+          }
+        },
+        {
+          "id": "jt2-028",
+          "deckId": "jt2",
+          "target": "महावीर जयंती",
+          "forbidden": [
+            "जन्म",
+            "त्रिशला",
+            "चैत्र",
+            "कल्याणक"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 28
+          }
+        },
+        {
+          "id": "jt2-029",
+          "deckId": "jt2",
+          "target": "उत्तम क्षमा",
+          "forbidden": [
+            "दसलक्षण",
+            "पर्युषण",
+            "धर्म",
+            "क्रोध"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 29
+          }
+        },
+        {
+          "id": "jt2-030",
+          "deckId": "jt2",
+          "target": "आकाश",
+          "forbidden": [
+            "द्रव्य",
+            "अजीव",
+            "अवकाश",
+            "लोकाकाश"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 30
+          }
+        },
+        {
+          "id": "jt2-031",
+          "deckId": "jt2",
+          "target": "काल",
+          "forbidden": [
+            "द्रव्य",
+            "समय",
+            "परिवर्तन",
+            "वर्तन"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 31
+          }
+        },
+        {
+          "id": "jt2-032",
+          "deckId": "jt2",
+          "target": "पुद्गल",
+          "forbidden": [
+            "स्पर्श",
+            "रस",
+            "गंध",
+            "वर्ण"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 32
+          }
+        },
+        {
+          "id": "jt2-033",
+          "deckId": "jt2",
+          "target": "धर्म द्रव्य",
+          "forbidden": [
+            "गति",
+            "सहायक",
+            "चलना",
+            "अजीव"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 33
+          }
+        },
+        {
+          "id": "jt2-034",
+          "deckId": "jt2",
+          "target": "अधर्म द्रव्य",
+          "forbidden": [
+            "स्थिति",
+            "रुकना",
+            "सहायक",
+            "अजीव"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 34
+          }
+        },
+        {
+          "id": "jt2-035",
+          "deckId": "jt2",
+          "target": "ढाई द्वीप",
+          "forbidden": [
+            "मनुष्य",
+            "क्षेत्र",
+            "जम्बूद्वीप",
+            "धातकीखण्ड"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 35
+          }
+        },
+        {
+          "id": "jt2-036",
+          "deckId": "jt2",
+          "target": "नंदीश्वर द्वीप",
+          "forbidden": [
+            "आठवाँ",
+            "५२ जिनालय",
+            "अकृत्रिम",
+            "पर्व"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 36
+          }
+        },
+        {
+          "id": "jt2-037",
+          "deckId": "jt2",
+          "target": "गजपंथ",
+          "forbidden": [
+            "सिद्धक्षेत्र",
+            "नासिक",
+            "सात मुनि",
+            "बलभद्र"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 37
+          }
+        },
+        {
+          "id": "jt2-038",
+          "deckId": "jt2",
+          "target": "मांगीतुंगी",
+          "forbidden": [
+            "ऋषभदेव",
+            "१०८ फ़ीट",
+            "प्रतिमा",
+            "नासिक"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 38
+          }
+        },
+        {
+          "id": "jt2-039",
+          "deckId": "jt2",
+          "target": "सोनागिरि",
+          "forbidden": [
+            "सिद्धक्षेत्र",
+            "दतिया",
+            "नंग-अनंग कुमार",
+            "पहाड़"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 39
+          }
+        },
+        {
+          "id": "jt2-040",
+          "deckId": "jt2",
+          "target": "मुक्तागिरि",
+          "forbidden": [
+            "सिद्धक्षेत्र",
+            "बैतूल",
+            "मेंढागिरि",
+            "निर्वाण"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 40
+          }
+        },
+        {
+          "id": "jt2-041",
+          "deckId": "jt2",
+          "target": "कुन्थुनाथ",
+          "forbidden": [
+            "सत्रहवें",
+            "तीर्थंकर",
+            "बकरा",
+            "हस्तिनापुर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 41
+          }
+        },
+        {
+          "id": "jt2-042",
+          "deckId": "jt2",
+          "target": "अरहनाथ",
+          "forbidden": [
+            "अठारहवें",
+            "तीर्थंकर",
+            "मछली",
+            "हस्तिनापुर"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 42
+          }
+        },
+        {
+          "id": "jt2-043",
+          "deckId": "jt2",
+          "target": "मल्लिनाथ",
+          "forbidden": [
+            "उन्नीसवें",
+            "तीर्थंकर",
+            "कलश",
+            "मिथिला"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 43
+          }
+        },
+        {
+          "id": "jt2-044",
+          "deckId": "jt2",
+          "target": "उपसर्ग",
+          "forbidden": [
+            "कष्ट",
+            "देव",
+            "मनुष्य",
+            "तिर्यंच"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 44
+          }
+        },
+        {
+          "id": "jt2-045",
+          "deckId": "jt2",
+          "target": "परीषह",
+          "forbidden": [
+            "सहन",
+            "मुनि",
+            "बाईस",
+            "कर्म"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 45
+          }
+        },
+        {
+          "id": "jt2-046",
+          "deckId": "jt2",
+          "target": "केवलज्ञानी",
+          "forbidden": [
+            "अरिहंत",
+            "सर्वज्ञ",
+            "समवशरण",
+            "केवली"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 46
+          }
+        },
+        {
+          "id": "jt2-047",
+          "deckId": "jt2",
+          "target": "क्षयोपशम",
+          "forbidden": [
+            "ज्ञान",
+            "मति",
+            "श्रुत",
+            "कर्म"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 47
+          }
+        },
+        {
+          "id": "jt2-048",
+          "deckId": "jt2",
+          "target": "औपशमिक",
+          "forbidden": [
+            "सम्यक्त्व",
+            "चारित्र",
+            "दबना",
+            "कर्म"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 48
+          }
+        },
+        {
+          "id": "jt2-049",
+          "deckId": "jt2",
+          "target": "क्षायिक",
+          "forbidden": [
+            "सम्यक्त्व",
+            "ज्ञान",
+            "नाश",
+            "कर्म"
+          ],
+          "source": {
+            "pdf": "Jain Taboo 2 2.pdf",
+            "page": 49
+          }
+        }
+      ]
+    }
+  ]
+}
