@@ -22,12 +22,12 @@ src/
     random.ts      seeded shuffle (reproducible tests)
   content/       generated deck JSON + lookup maps
   persistence/   KeyValueStore (IndexedDB/memory) + Repository (versioned game + prefs)
-  platform/      haptics, sound, wake lock, share — behind the `Platform` interface
+  platform/      haptics, synthesised sound cues (sounds.ts), background music (music.ts), wake lock, share — behind the `Platform` interface
   state/         AppContext (glue: engine ⇄ persistence ⇄ platform), hash router, countdown hook
   pwa/           service-worker registration, update prompt, install prompt, online status
   i18n/          all UI strings: hi.ts (source of keys) and en.ts (typed against it); useT() picks one from prefs
   ui/            design-system components (buttons, steppers, sheets, standings, icons, logo)
-  screens/       Home, Setup, HowToPlay, Settings, Decks, game/* (Ready, Play, Review, RoundSummary, Results, Scoreboard)
+  screens/       Home, Setup, HowToPlay, Settings, game/* (Ready, Play, Review, RoundSummary, Results, Scoreboard)
 ```
 
 Theming: every colour is a CSS custom property on `:root`. Dark values are redefined under `prefers-color-scheme: dark` (unless `data-theme="light"`) and under `[data-theme="dark"]`, so System, Light and Dark all work.

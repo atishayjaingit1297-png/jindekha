@@ -6,7 +6,7 @@ import { useApp } from '../../state/AppContext';
 import { useCountdown } from '../../state/useCountdown';
 import { useT } from '../../i18n';
 import { Icon } from '../../ui/Icon';
-import { ConfirmDialog, IconButton, Sheet } from '../../ui/controls';
+import { ConfirmDialog, IconButton, Sheet, QuickToggles } from '../../ui/controls';
 import { TeamChip } from '../../ui/TeamBits';
 import type { GameViewProps } from './Game';
 
@@ -20,7 +20,7 @@ function formatTime(ms: number) {
 
 export function PlayView({ navigate, openScoreboard }: GameViewProps) {
   const t = useT();
-  const { game, dispatch } = useApp();
+  const { game, dispatch, prefs, updatePrefs } = useApp();
   const [feedback, setFeedback] = useState<{ kind: Outcome; text: string; key: number } | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
   const fbTimer = useRef<number | undefined>(undefined);
@@ -107,7 +107,7 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
         )}
       </div>
 
-      <div className="actions">
+      <div className="actions" data-cue="own">
         <button type="button" className="action violation" onClick={() => act('VIOLATION')} disabled={paused}>
           <Icon name="alert" />
           {t.game.violation}
@@ -156,6 +156,13 @@ export function PlayView({ navigate, openScoreboard }: GameViewProps) {
               <Icon name="home" /> {t.game.home}
             </button>
           </div>
+          <QuickToggles
+            sound={prefs.sound}
+            haptics={prefs.haptics}
+            onSound={(v) => updatePrefs({ sound: v })}
+            onHaptics={(v) => updatePrefs({ haptics: v })}
+            labels={{ sound: t.game.soundToggle, haptics: t.game.hapticsToggle }}
+          />
           <button type="button" className="btn danger-text" onClick={() => setConfirmEnd(true)}>
             {t.game.endGame}
           </button>

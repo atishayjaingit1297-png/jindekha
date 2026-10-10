@@ -30,6 +30,10 @@ test.describe('PWA', () => {
     await page.reload();
     await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
     await expect.poll(async () => page.evaluate(async () => (await caches.keys()).length)).toBeGreaterThan(0);
+    // The background music is cached on first play so it also works offline.
+    await expect
+      .poll(async () => page.evaluate(async () => (await (await caches.open('jindekha-audio')).keys()).length), { timeout: 15_000 })
+      .toBeGreaterThan(0);
 
     await context.setOffline(true);
     await page.reload();

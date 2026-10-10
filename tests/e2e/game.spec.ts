@@ -194,7 +194,6 @@ test('every secondary screen is reachable and returns home', async ({ page }) =>
   for (const [button, heading] of [
     ['कैसे खेलें', 'कैसे खेलें'],
     ['सेटिंग्स', 'सेटिंग्स'],
-    ['कार्ड-संग्रह', 'कार्ड-संग्रह'],
   ] as const) {
     await page.getByRole('button', { name: button }).click();
     await expect(page.getByRole('heading', { name: heading, level: 1 })).toBeVisible();
@@ -203,7 +202,16 @@ test('every secondary screen is reachable and returns home', async ({ page }) =>
     await page.getByRole('button', { name: 'वापस' }).click();
     await expect(page.getByRole('heading', { name: 'जिनदेखा' })).toBeVisible();
   }
-  await page.getByRole('button', { name: 'कार्ड-संग्रह' }).click();
+});
+
+test('the card list is not browsable anywhere in the app', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'कार्ड-संग्रह' })).toHaveCount(0);
+  await page.goto('/#/decks');
+  await expect(page.getByRole('heading', { name: 'जिनदेखा' })).toBeVisible();
+  await page.goto('/#/setup');
+  // Setup only names the decks and counts cards; no target or forbidden word is shown.
+  await expect(page.getByText('तत्वार्थ सूत्र')).toHaveCount(0);
   await expect(page.getByText('कुल 94 कार्ड')).toBeVisible();
 });
 

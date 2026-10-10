@@ -86,6 +86,16 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
         <button
           type="button"
           className="icon-btn theme-btn"
+          onClick={() => updatePrefs({ music: !prefs.music })}
+          aria-label={prefs.music ? t.home.musicOff : t.home.musicOn}
+          aria-pressed={prefs.music}
+          title={prefs.music ? t.home.musicOff : t.home.musicOn}
+        >
+          <Icon name={prefs.music ? 'music' : 'musicOff'} />
+        </button>
+        <button
+          type="button"
+          className="icon-btn theme-btn"
           onClick={() => updatePrefs({ theme: theme === 'dark' ? 'light' : 'dark' })}
           aria-label={theme === 'dark' ? t.home.toLight : t.home.toDark}
           title={theme === 'dark' ? t.home.toLight : t.home.toDark}
@@ -146,9 +156,6 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
             {t.home.settings}
           </button>
         </div>
-        <button type="button" className="btn ghost" onClick={() => navigate('decks')}>
-          <Icon name="cards" /> {t.home.decks}
-        </button>
         {pwa.canInstall && (
           <div className="banner">
             <Icon name="download" />

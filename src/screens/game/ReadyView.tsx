@@ -3,12 +3,12 @@ import { currentDescriber, currentTeam, getScores, turnsPlayedInRound } from '..
 import { useApp } from '../../state/AppContext';
 import { useT } from '../../i18n';
 import { Icon } from '../../ui/Icon';
-import { ConfirmDialog, IconButton, useArmed } from '../../ui/controls';
+import { ConfirmDialog, IconButton, QuickToggles, useArmed } from '../../ui/controls';
 import type { GameViewProps } from './Game';
 
 export function ReadyView({ navigate, openScoreboard }: GameViewProps) {
   const t = useT();
-  const { game, dispatch } = useApp();
+  const { game, dispatch, prefs, updatePrefs } = useApp();
   const [confirmEnd, setConfirmEnd] = useState(false);
   const armed = useArmed();
   if (!game) return null;
@@ -54,12 +54,19 @@ export function ReadyView({ navigate, openScoreboard }: GameViewProps) {
         <span className="muted small">{t.game.readyHelp}</span>
       </section>
 
-      <button type="button" className="btn primary big-start" style={{ background: team.color, boxShadow: 'var(--shadow-lg)' }} disabled={!armed} onClick={() => dispatch({ type: 'START_TURN', now: Date.now() })}>
+      <button type="button" data-cue="own" className="btn primary big-start" style={{ background: team.color, boxShadow: 'var(--shadow-lg)' }} disabled={!armed} onClick={() => dispatch({ type: 'START_TURN', now: Date.now() })}>
         <Icon name="play" /> {t.game.start} · {t.setup.seconds(game.rules.turnSeconds)}
       </button>
       <p className="muted small" style={{ margin: 0 }}>
         {t.game.lastCard}: {game.drawPile.length}
       </p>
+      <QuickToggles
+        sound={prefs.sound}
+        haptics={prefs.haptics}
+        onSound={(v) => updatePrefs({ sound: v })}
+        onHaptics={(v) => updatePrefs({ haptics: v })}
+        labels={{ sound: t.game.soundToggle, haptics: t.game.hapticsToggle }}
+      />
       <button type="button" className="btn danger-text" onClick={() => setConfirmEnd(true)}>
         {t.game.endGame}
       </button>

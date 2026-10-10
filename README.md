@@ -10,6 +10,8 @@ In each turn, one player describes the target word on a card to their team. They
 - 1–6 teams (one team for solo practice, plus a one-tap **Quick game** on the home screen), optional player names (the describer rotates), configurable timer and scoring, round-based or score-target games. See [docs/RULES.md](docs/RULES.md).
 - Local multiplayer on one device. It works offline after the first visit, and an unfinished game survives a refresh or the app closing.
 - Hindi and English interface (हि/EN switch on the home screen and in Settings). Card words always stay in Hindi, as printed in the PDFs.
+- Background music on the home screen and menus; it pauses for the whole game and resumes where it stopped. Loud, distinct sounds for every button press (correct, skip and forbidden each sound different), with music, sound and vibration switches in Settings and sound/vibration switches inside the game.
+- The card list is not shown anywhere in the app, so players can't see answers in advance.
 - Light and dark themes: follows the device by default, or pick Light/Dark (moon/sun button on the home screen).
 - Devanagari fonts bundled (Baloo 2, Mukta). Original branding, artwork and animations, which turn off when the device asks for reduced motion.
 - Architecture and the iOS/Android path: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).

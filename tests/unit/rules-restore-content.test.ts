@@ -116,7 +116,8 @@ describe('bundled content', () => {
 
 describe('prefs and translations', () => {
   it('defaults theme and language and repairs bad values', () => {
-    expect(sanitizePrefs({})).toMatchObject({ theme: 'system', language: 'hi' });
+    expect(sanitizePrefs({})).toMatchObject({ theme: 'system', language: 'hi', music: true, sound: true, haptics: true });
+    expect(sanitizePrefs({ music: false })).toMatchObject({ music: false });
     expect(sanitizePrefs({ theme: 'neon', language: 'fr' })).toMatchObject({ theme: 'system', language: 'hi' });
     expect(sanitizePrefs({ theme: 'dark', language: 'en' })).toMatchObject({ theme: 'dark', language: 'en' });
   });

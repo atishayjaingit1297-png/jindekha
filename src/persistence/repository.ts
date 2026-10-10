@@ -16,6 +16,7 @@ export interface Prefs {
   theme: ThemePref;
   language: LanguagePref;
   sound: boolean;
+  music: boolean;
   haptics: boolean;
   keepAwake: boolean;
   largeText: boolean;
@@ -31,6 +32,7 @@ export const DEFAULT_PREFS: Prefs = {
   theme: 'system',
   language: 'hi',
   sound: true,
+  music: true,
   haptics: true,
   keepAwake: true,
   largeText: false,
@@ -61,6 +63,7 @@ export function sanitizePrefs(raw: unknown): Prefs {
     theme: p.theme === 'light' || p.theme === 'dark' ? p.theme : 'system',
     language: p.language === 'en' ? 'en' : 'hi',
     sound: typeof p.sound === 'boolean' ? p.sound : DEFAULT_PREFS.sound,
+    music: typeof p.music === 'boolean' ? p.music : DEFAULT_PREFS.music,
     haptics: typeof p.haptics === 'boolean' ? p.haptics : DEFAULT_PREFS.haptics,
     keepAwake: typeof p.keepAwake === 'boolean' ? p.keepAwake : DEFAULT_PREFS.keepAwake,
     largeText: typeof p.largeText === 'boolean' ? p.largeText : DEFAULT_PREFS.largeText,

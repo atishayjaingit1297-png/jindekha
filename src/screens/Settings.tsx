@@ -51,6 +51,17 @@ export function Settings({ navigate }: { navigate: (r: Route) => void }) {
 
       <h2 className="section-title">{t.settings.gameplay}</h2>
       <section className="panel">
+        <SettingRow
+          label={
+            <>
+              {t.settings.music}
+              <br />
+              <span className="muted small">{t.settings.musicHint}</span>
+            </>
+          }
+        >
+          <Switch label={t.settings.music} checked={prefs.music} onChange={(v) => updatePrefs({ music: v })} />
+        </SettingRow>
         <SettingRow label={t.settings.sound}>
           <Switch
             label={t.settings.sound}

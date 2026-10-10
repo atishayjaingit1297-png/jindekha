@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-export type Route = 'home' | 'setup' | 'rules' | 'settings' | 'decks' | 'game';
-const ROUTES: Route[] = ['home', 'setup', 'rules', 'settings', 'decks', 'game'];
+export type Route = 'home' | 'setup' | 'rules' | 'settings' | 'game';
+const ROUTES: Route[] = ['home', 'setup', 'rules', 'settings', 'game'];
 
 export function parseRoute(hash: string): Route {
   const r = hash.replace(/^#\/?/, '') as Route;

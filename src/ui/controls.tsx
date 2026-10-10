@@ -181,3 +181,17 @@ export function useArmed(delayMs = 400): boolean {
   }, [delayMs]);
   return armed;
 }
+
+/** Two pill toggles for game sounds and vibration, usable mid-game. */
+export function QuickToggles({ sound, haptics, onSound, onHaptics, labels }: { sound: boolean; haptics: boolean; onSound: (v: boolean) => void; onHaptics: (v: boolean) => void; labels: { sound: string; haptics: string } }) {
+  return (
+    <div className="quick-toggles">
+      <button type="button" className="toggle-pill" aria-pressed={sound} onClick={() => onSound(!sound)}>
+        <Icon name={sound ? 'volume' : 'volumeOff'} /> {labels.sound}
+      </button>
+      <button type="button" className="toggle-pill" aria-pressed={haptics} onClick={() => onHaptics(!haptics)}>
+        <Icon name={haptics ? 'vibrate' : 'vibrateOff'} /> {labels.haptics}
+      </button>
+    </div>
+  );
+}

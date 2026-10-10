@@ -1,36 +1,34 @@
 // Device capabilities behind small interfaces so a native shell (e.g. Capacitor) can swap implementations.
 // Every method must be safe to call when the capability is missing.
+import { createOutput, playCue } from './sounds';
+import type { SoundCue } from './sounds';
+import { createMusicPlayer, nullMusic } from './music';
+import type { MusicPlayer } from './music';
 
-export type Cue = 'correct' | 'skip' | 'violation' | 'tick' | 'timeUp' | 'start';
+export type Cue = SoundCue;
+export type { MusicPlayer };
 
 export interface Platform {
   haptic(cue: Cue): void;
   sound(cue: Cue): void;
   keepAwake(on: boolean): Promise<void>;
   share(text: string): Promise<'shared' | 'copied' | 'unavailable'>;
+  music: MusicPlayer;
 }
 
 const VIBRATION: Record<Cue, number | number[]> = {
-  correct: 30,
-  skip: 15,
-  violation: [60, 40, 60],
-  tick: 10,
-  timeUp: [200, 80, 200],
-  start: 40,
+  correct: 60,
+  skip: 30,
+  violation: [120, 60, 120],
+  tick: 15,
+  timeUp: [250, 100, 250],
+  start: 50,
+  tap: 12,
 };
 
-// Short synthesized tones — no audio files, nothing to license or download.
-const TONES: Record<Cue, { f: number[]; d: number; type: OscillatorType; gain: number }> = {
-  correct: { f: [660, 880], d: 0.09, type: 'sine', gain: 0.18 },
-  skip: { f: [440], d: 0.08, type: 'triangle', gain: 0.12 },
-  violation: { f: [180, 140], d: 0.16, type: 'square', gain: 0.08 },
-  tick: { f: [1200], d: 0.03, type: 'sine', gain: 0.06 },
-  timeUp: { f: [523, 392, 262], d: 0.18, type: 'triangle', gain: 0.18 },
-  start: { f: [392, 523], d: 0.1, type: 'sine', gain: 0.15 },
-};
-
-export function createWebPlatform(): Platform {
+export function createWebPlatform(musicSrc = `${import.meta.env.BASE_URL}audio/background.mp3`): Platform {
   let ctx: AudioContext | null = null;
+  let out: AudioNode | null = null;
   let wakeLock: WakeLockSentinel | null = null;
   let wantAwake = false;
 
@@ -39,6 +37,7 @@ export function createWebPlatform(): Platform {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AC) return null;
     ctx = new AC();
+    out = createOutput(ctx);
     return ctx;
   };
 
@@ -69,22 +68,9 @@ export function createWebPlatform(): Platform {
     sound(cue) {
       try {
         const ac = audio();
-        if (!ac) return;
+        if (!ac || !out) return;
         if (ac.state === 'suspended') void ac.resume();
-        const t = TONES[cue];
-        let at = ac.currentTime;
-        for (const f of t.f) {
-          const osc = ac.createOscillator();
-          const g = ac.createGain();
-          osc.type = t.type;
-          osc.frequency.value = f;
-          g.gain.setValueAtTime(t.gain, at);
-          g.gain.exponentialRampToValueAtTime(0.0001, at + t.d);
-          osc.connect(g).connect(ac.destination);
-          osc.start(at);
-          osc.stop(at + t.d);
-          at += t.d * 0.9;
-        }
+        playCue(ac, out, cue);
       } catch {
         /* audio not available */
       }
@@ -112,6 +98,7 @@ export function createWebPlatform(): Platform {
       }
       return 'unavailable';
     },
+    music: createMusicPlayer(musicSrc),
   };
 }
 
@@ -120,4 +107,5 @@ export const nullPlatform: Platform = {
   sound: () => undefined,
   keepAwake: async () => undefined,
   share: async () => 'unavailable',
+  music: nullMusic,
 };

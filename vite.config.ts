@@ -10,6 +10,7 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 // `--mode preview-file` builds one self-contained HTML file (no service worker) for sharing a playable preview.
 export default defineConfig(({ mode }) => ({
   define: { __APP_VERSION__: JSON.stringify(pkg.version) },
+  base: mode === 'preview-file' ? './' : '/',
   build: mode === 'preview-file' ? { outDir: 'dist-preview', assetsInlineLimit: 100_000_000 } : undefined,
   plugins: [
     react(),
@@ -44,6 +45,19 @@ export default defineConfig(({ mode }) => ({
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,json}'],
         navigateFallback: '/index.html',
         cleanupOutdatedCaches: true,
+        // The music file is large, so it is cached the first time it is fetched rather than at install.
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.endsWith('.mp3'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'jindekha-audio',
+              rangeRequests: true,
+              cacheableResponse: { statuses: [200] },
+              expiration: { maxEntries: 2 },
+            },
+          },
+        ],
       },
       devOptions: { enabled: false },
     }),

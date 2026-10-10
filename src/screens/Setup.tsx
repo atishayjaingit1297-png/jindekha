@@ -176,7 +176,7 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
           </label>
         ))}
         <p className="muted small" style={{ margin: 0 }}>
-          {t.decks.total(totalCards)}
+          {t.setup.totalCards(totalCards)}
         </p>
       </div>
 

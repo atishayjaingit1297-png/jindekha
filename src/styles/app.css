@@ -1825,3 +1825,34 @@ body,
     height: 52px;
   }
 }
+
+/* ---------- in-game sound / vibration toggles ---------- */
+.quick-toggles {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--field);
+  color: var(--ink-3);
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+}
+.toggle-pill .icon {
+  width: 20px;
+  height: 20px;
+}
+.toggle-pill[aria-pressed='true'] {
+  border-color: var(--good-solid);
+  background: var(--good-soft);
+  color: var(--good-ink);
+}
