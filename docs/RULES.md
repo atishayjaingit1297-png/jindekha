@@ -42,10 +42,11 @@ Review edits respect the skip limit: a result can't be changed to "skip" if that
 | Max skips per turn | unlimited | 0–20 or unlimited |
 | Skipped cards come back later | off | on: a card skipped in a turn goes to the bottom of the pile when the turn is confirmed. It never repeats within the same turn |
 | Game end | after 3 rounds | 1–20 rounds, **or** a target score of 5–200 |
-| Teams | 2 | 2–6 |
+| Teams | 2 | 1–6 (one team = solo practice; the home screen's **झटपट खेल / Quick game** starts one team, one round, with the current rules and decks) |
 | Decks | all | any non-empty selection |
 
 - **Target-score games** end at the end of the round in which any team reaches the target. That way every team gets the same number of turns, as long as cards last.
+- **One team:** every turn is a whole round. The results screen shows the team's score instead of a winner, and "violation points to other teams" has no effect.
 - **Ties:** teams with equal scores share a rank. If the top score is shared, the result is shown as a tie. There is no sudden-death round in v1.
 - **No repeats:** each card appears at most once per game, unless "skipped cards come back later" is on.
 - **Deck exhausted:** if the pile runs out mid-turn, the turn ends. If it is empty when a turn would start, the game ends with the reason "all cards played", even mid-round. With 94 cards this is unlikely for 2–3 teams over 3 rounds of 60 s, but likely with many teams, long turns or many rounds.

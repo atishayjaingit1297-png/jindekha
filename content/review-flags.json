@@ -1,19 +1,59 @@
 {
   "$comment": "Entries preserved exactly as printed but worth a content review. Nothing here is changed automatically. Resolve by editing the TSV (and removing the flag) once confirmed.",
   "flags": [
-    { "cardId": "jt1-001", "field": "forbidden", "value": "संकृत", "note": "Likely intended \"संस्कृत\" (Sanskrit)." },
-    { "cardId": "jt1-002", "field": "forbidden", "value": "आदिनाथ /रिषभदेव", "note": "\"रिषभदेव\" here vs \"ऋषभदेव\" on jt2-038; spacing around \"/\" also irregular." },
-    { "cardId": "jt1-003", "field": "forbidden", "value": "अनुव्रत", "note": "Commonly spelled \"अणुव्रत\"." },
-    { "cardId": "jt1-012", "field": "forbidden", "value": "पार्स्वनाथ", "note": "Spelled \"पार्श्वनाथ\" on jt1-037 and jt1-042." },
-    { "cardId": "jt1-012", "field": "target", "value": "शिखर जी", "note": "Overlaps in meaning with jt1-042 \"सम्मेद शिखर जी\" (both cards kept)." },
-    { "cardId": "jt1-006", "field": "forbidden", "value": "कुंडलपुर", "note": "Spelled \"कुण्डलपुर\" on jt1-016." },
-    { "cardId": "jt1-031", "field": "target", "value": "सामयिक", "note": "Commonly spelled \"सामायिक\"." },
-    { "cardId": "jt1-041", "field": "forbidden", "value": "एक स्वाँस", "note": "Commonly spelled \"एक श्वास\"." },
-    { "cardId": "jt1-042", "field": "forbidden", "value": "20", "note": "Latin digits; other cards use Devanagari digits (e.g. ३६, ४८)." },
-    { "cardId": "jt1-045", "field": "forbidden", "value": "2 भाई", "note": "Latin digit; other cards use Devanagari digits." },
-    { "cardId": "jt1-034", "field": "forbidden", "value": "दशलक्षण", "note": "Spelled \"दसलक्षण\" on jt2-029." },
-    { "cardId": "jt2-021", "field": "target", "value": "समाध मरण", "note": "Commonly written \"समाधि मरण\" (\"समाधि\" is also a forbidden word on the same card)." },
-    { "cardId": "jt2-022", "field": "forbidden", "value": "अष्टान्हिका", "note": "Also written \"अष्टाह्निका\"." },
-    { "cardId": "jt1-015", "field": "target", "value": "जिनमन्दिर", "note": "Near-duplicate concept of jt1-023 \"मंदिर\" (both cards kept)." }
+    {
+      "cardId": "jt1-002",
+      "field": "forbidden",
+      "value": "आदिनाथ /ऋषभदेव",
+      "note": "Irregular spacing around \"/\" (spelling confirmed)."
+    },
+    {
+      "cardId": "jt1-012",
+      "field": "target",
+      "value": "शिखर जी",
+      "note": "Overlaps in meaning with jt1-042 \"सम्मेद शिखर जी\" (both cards kept)."
+    },
+    {
+      "cardId": "jt1-041",
+      "field": "forbidden",
+      "value": "एक स्वाँस",
+      "note": "Commonly spelled \"एक श्वास\"."
+    },
+    {
+      "cardId": "jt1-042",
+      "field": "forbidden",
+      "value": "20",
+      "note": "Latin digits; other cards use Devanagari digits (e.g. ३६, ४८)."
+    },
+    {
+      "cardId": "jt1-045",
+      "field": "forbidden",
+      "value": "2 भाई",
+      "note": "Latin digit; other cards use Devanagari digits."
+    },
+    {
+      "cardId": "jt2-022",
+      "field": "forbidden",
+      "value": "अष्टान्हिका",
+      "note": "Also written \"अष्टाह्निका\"."
+    },
+    {
+      "cardId": "jt1-015",
+      "field": "target",
+      "value": "जिनमन्दिर",
+      "note": "Near-duplicate concept of jt1-023 \"मंदिर\" (both cards kept)."
+    },
+    {
+      "cardId": "jt2-017",
+      "field": "forbidden",
+      "value": "चरित्र",
+      "note": "Printed as \"चरित्र\" (biography/character), which fits प्रथमानुयोग. Content owner listed \"चारित्र\" as a correct word; confirm whether this card should change."
+    },
+    {
+      "cardId": "jt2-021",
+      "field": "target",
+      "value": "समाधि मरण",
+      "note": "The target now contains the forbidden word \"समाधि\" on the same card."
+    }
   ]
 }

@@ -34,7 +34,7 @@ describe('createGame', () => {
   it('rejects invalid configs', () => {
     const cards = makeCards(3);
     const ok = { name: 'A', color: '#1' };
-    expect(() => createGame({ teams: [ok], deckIds: ['d1'], rules: DEFAULT_RULES }, cards, 1, T0)).toThrow(GameConfigError);
+    expect(() => createGame({ teams: [], deckIds: ['d1'], rules: DEFAULT_RULES }, cards, 1, T0)).toThrow(GameConfigError);
     expect(() => createGame({ teams: [ok, { name: ' A ', color: '#2' }], deckIds: ['d1'], rules: DEFAULT_RULES }, cards, 1, T0)).toThrow(/unique/);
     expect(() => createGame({ teams: [ok, { name: '', color: '#2' }], deckIds: ['d1'], rules: DEFAULT_RULES }, cards, 1, T0)).toThrow(/name/);
     expect(() => createGame({ teams: [ok, { name: 'B', color: '#2' }], deckIds: ['zz'], rules: DEFAULT_RULES }, cards, 1, T0)).toThrow(/deck/);
@@ -99,6 +99,31 @@ describe('turn flow and scoring', () => {
     expect(canSkip(g)).toBe(false);
     const blocked = act(g, 'SKIP', T0 + 2 * SEC);
     expect(blocked).toBe(g);
+  });
+});
+
+describe('single team (quick game)', () => {
+  it('plays a one-team game where every turn is a round', () => {
+    let g = newGame({ teams: 1, rules: { endCondition: { type: 'rounds', rounds: 2 }, violationRecipient: 'opponents' } });
+    expect(g.teams).toHaveLength(1);
+    g = reduce(g, { type: 'START_TURN', now: T0 });
+    g = act(g, 'CORRECT', T0 + 1);
+    g = act(g, 'VIOLATION', T0 + 2);
+    g = act(g, 'CORRECT', T0 + 3);
+    g = run(g, { type: 'TICK', now: T0 + 61 * SEC }, { type: 'CONFIRM_TURN', now: T0 + 62 * SEC });
+    expect(g.status).toBe('round_summary');
+    expect(getScores(g)).toEqual({ team1: 1 }); // 2 correct − 1 violation; no opponents to receive points
+    g = run(g, { type: 'NEXT_ROUND', now: T0 + 63 * SEC }, { type: 'START_TURN', now: T0 + 64 * SEC });
+    expect(g.turn!.teamId).toBe('team1');
+    g = run(g, { type: 'TICK', now: T0 + 200 * SEC }, { type: 'CONFIRM_TURN', now: T0 + 201 * SEC });
+    expect(g).toMatchObject({ status: 'completed', endReason: 'rounds' });
+    expect(getLeaders(g).map((t) => t.id)).toEqual(['team1']);
+  });
+
+  it('ends a one-round quick game straight after the turn', () => {
+    let g = newGame({ teams: 1, rules: { endCondition: { type: 'rounds', rounds: 1 } } });
+    g = run(g, { type: 'START_TURN', now: T0 }, { type: 'TICK', now: T0 + 61 * SEC }, { type: 'CONFIRM_TURN', now: T0 + 62 * SEC });
+    expect(g.status).toBe('completed');
   });
 });
 

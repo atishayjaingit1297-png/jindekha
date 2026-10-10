@@ -17,6 +17,7 @@ export function ResultsView({ navigate }: GameViewProps) {
   if (!game) return null;
 
   const leaders = getLeaders(game);
+  const solo = game.teams.length === 1;
   const tie = leaders.length > 1;
   const standings = getStandings(game);
   const allResults = game.history.flatMap((h) => h.results);
@@ -53,14 +54,14 @@ export function ResultsView({ navigate }: GameViewProps) {
           ))}
         </div>
         <Icon name="trophy" className="crown" />
-        <p>{tie ? t.results.tie : t.results.winner}</p>
+        <p>{solo ? t.results.soloTitle : tie ? t.results.tie : t.results.winner}</p>
         <h1>{tie ? leaders.map((t) => t.name).join(' · ') : leaders[0].name}</h1>
         <p>
           {t.common.pts(standings[0].score)} · {reason}
         </p>
       </section>
 
-      <Standings game={game} />
+      {!solo && <Standings game={game} />}
 
       <section className="panel stack">
         <h2>{t.results.summary}</h2>

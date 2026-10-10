@@ -216,3 +216,34 @@ test('settings persist across reloads', async ({ page }) => {
   await page.reload();
   await expect(page.getByRole('switch', { name: 'बड़े अक्षर' })).toBeChecked();
 });
+
+test('quick game: one team, one turn, straight to the score', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/');
+  await page.getByRole('button', { name: /झटपट खेल/ }).click();
+  await expect(page.locator('.team-hero')).toHaveText('मेरी टीम');
+  await expect(page.getByText('बारी 1/1')).toBeVisible();
+  await page.getByRole('button', { name: /शुरू करें ·/ }).click();
+  await currentCard(page);
+  await page.getByRole('button', { name: 'सही' }).click();
+  await page.getByRole('button', { name: 'सही' }).click();
+  await page.clock.runFor(61_000);
+  await page.getByRole('button', { name: /परिणाम देखें/ }).click();
+  await expect(page.getByText('आपका स्कोर')).toBeVisible();
+  await expect(page.locator('.winner h1')).toHaveText('मेरी टीम');
+  await expect(page.locator('.winner')).toContainText('2 अंक');
+  await expect(page.locator('.standing')).toHaveCount(0);
+  await shot(page, '11-quick-result');
+});
+
+test('setup allows playing with a single team', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/#/setup');
+  await page.getByRole('button', { name: /टीम हटाएँ/ }).last().click();
+  await expect(page.getByLabel('टीम का नाम 1')).toBeVisible();
+  await expect(page.getByLabel('टीम का नाम 2')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /टीम हटाएँ/ })).toHaveCount(0);
+  await expect(page.getByText('एक ही टीम रखें')).toBeVisible();
+  await page.getByRole('button', { name: 'खेल शुरू करें' }).click();
+  await expect(page.getByText('बारी 1/1')).toBeVisible();
+});

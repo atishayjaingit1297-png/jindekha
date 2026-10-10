@@ -18,7 +18,7 @@ export class GameConfigError extends Error {}
 
 export function createGame(config: GameConfig, allCards: readonly Card[], seed: number, now: number): GameState {
   const names = config.teams.map((t) => t.name.trim());
-  if (config.teams.length < 2) throw new GameConfigError('At least two teams are required');
+  if (config.teams.length < 1) throw new GameConfigError('At least one team is required');
   if (names.some((n) => !n)) throw new GameConfigError('Every team needs a name');
   if (new Set(names).size !== names.length) throw new GameConfigError('Team names must be unique');
   const deckIds = [...new Set(config.deckIds)];

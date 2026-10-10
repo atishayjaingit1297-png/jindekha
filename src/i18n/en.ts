@@ -10,6 +10,9 @@ export const en: Strings = {
 
   home: {
     newGame: 'New game',
+    quickGame: 'Quick game',
+    quickGameMeta: (s) => `One team · one turn · ${s} seconds`,
+    soloTeam: 'My team',
     continue: 'Continue game',
     continueMeta: (round, teams) => `Round ${round} · ${teams}`,
     howTo: 'How to play',
@@ -30,6 +33,7 @@ export const en: Strings = {
     teams: 'Teams',
     addTeam: 'Add team',
     removeTeam: 'Remove team',
+    soloHint: 'Keep just one team for solo practice or a quick game.',
     teamName: 'Team name',
     colors: 'Colour',
     color: (n) => `Colour ${n}`,
@@ -100,6 +104,7 @@ export const en: Strings = {
     nextRound: 'Next round',
     leading: 'Leading',
     tied: 'Tied',
+    soloTotal: (n) => `${n} points so far`,
     of: (a, b) => `${a} / ${b}`,
     lastCard: 'Cards left',
     turnShort: 'Turn',
@@ -118,6 +123,7 @@ export const en: Strings = {
   results: {
     title: 'Results',
     winner: 'Winner',
+    soloTitle: 'Your score',
     tie: "It's a tie!",
     endedRounds: (n) => `${n} rounds played`,
     endedScore: (n) => `Target of ${n} points`,
@@ -177,7 +183,7 @@ export const en: Strings = {
   howTo: {
     gistTitle: 'The idea',
     gist:
-      'Two or more teams take turns. In each turn, one player describes the **target word** on the card to their team, without saying the target itself or any of the **forbidden words** listed under it. The team scores for every word it guesses before time runs out.',
+      'One or more teams take turns (a single team makes a quick or practice game). In each turn, one player describes the **target word** on the card to their team, without saying the target itself or any of the **forbidden words** listed under it. The team scores for every word it guesses before time runs out.',
     exampleCard: 'Example card',
     turnTitle: 'A turn',
     steps: [

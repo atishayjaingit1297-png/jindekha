@@ -56,24 +56,36 @@ The verified transcriptions are the source of truth. They live in `content/sourc
 | Identical cards | none |
 | Unicode | stored NFC-normalised; only Devanagari, digits and simple punctuation |
 
-## Entries preserved as printed but flagged for review
+## Confirmed corrections (content owner, v1.2)
 
-The text has **not** been changed. These items are listed in `content/review-flags.json` for a content owner to confirm.
+These spellings were confirmed as correct by the content owner and applied to the source TSVs.
+
+| Card | Printed | Now |
+|---|---|---|
+| jt1-001 | संकृत | संस्कृत |
+| jt1-002 | आदिनाथ /रिषभदेव | आदिनाथ /ऋषभदेव |
+| jt1-003 | अनुव्रत | अणुव्रत |
+| jt1-006 | कुंडलपुर | कुण्डलपुर |
+| jt1-012 | पार्स्वनाथ | पार्श्वनाथ |
+| jt1-031 | सामयिक | सामायिक |
+| jt2-021 | समाध मरण | समाधि मरण |
+| jt2-029 | दसलक्षण | दशलक्षण |
+
+चारित्र, पुद्गल and मल्लिनाथ were also confirmed. They already appear correctly on jt2-009, jt2-019, jt2-048 (चारित्र), jt2-032 (पुद्गल) and jt2-043 (मल्लिनाथ).
+
+## Still open for review
+
+These items are listed in `content/review-flags.json` for a content owner to confirm. Their text has not been changed.
 
 | Card | Entry | Note |
 |---|---|---|
-| jt1-001 | संकृत | Likely intended संस्कृत |
-| jt1-002 | आदिनाथ /रिषभदेव | "रिषभदेव" here vs "ऋषभदेव" on jt2-038; irregular spacing around "/" |
-| jt1-003 | अनुव्रत | Commonly अणुव्रत |
-| jt1-006 / jt1-016 | कुंडलपुर / कुण्डलपुर | Two spellings |
-| jt1-012 | पार्स्वनाथ | Spelled पार्श्वनाथ on jt1-037 and jt1-042 |
+| jt2-017 | चरित्र | Printed "चरित्र" on the प्रथमानुयोग card (fits "life stories"). Confirm whether it should be चारित्र |
+| jt2-021 | समाधि मरण | The target now contains the forbidden word समाधि on the same card |
+| jt1-002 | आदिनाथ /ऋषभदेव | Irregular spacing around "/" |
 | jt1-012 / jt1-042 | शिखर जी / सम्मेद शिखर जी | Overlapping concepts (both kept) |
 | jt1-015 / jt1-023 | जिनमन्दिर / मंदिर | Overlapping concepts (both kept) |
-| jt1-031 | सामयिक | Commonly सामायिक |
-| jt1-034 / jt2-029 | दशलक्षण / दसलक्षण | Two spellings |
 | jt1-041 | एक स्वाँस | Commonly एक श्वास |
 | jt1-042, jt1-045 | "20", "2 भाई" | Latin digits; other cards use Devanagari digits (३६, ४८, १०८) |
-| jt2-021 | समाध मरण | Commonly समाधि मरण (समाधि is also a forbidden word on the same card) |
 | jt2-022 | अष्टान्हिका | Also written अष्टाह्निका |
 
 Some words are both a target on one card and a forbidden word on another, e.g. समवशरण, लोभ, शास्त्र, समयसार, शांतिधारा. This is normal for the format and not an error.

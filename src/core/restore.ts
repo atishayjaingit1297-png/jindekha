@@ -31,7 +31,7 @@ export function restoreGame(raw: unknown, knownCardIds: Set<string>): GameState 
     const s = raw as unknown as GameState;
     if (!isStr(s.id) || !isNum(s.createdAt) || !isNum(s.updatedAt) || !isNum(s.seed)) return null;
     if (!STATUSES.includes(s.status)) return null;
-    if (!Array.isArray(s.teams) || s.teams.length < 2) return null;
+    if (!Array.isArray(s.teams) || s.teams.length < 1) return null;
     for (const t of s.teams) {
       if (!isObj(t) || !isStr(t.id) || !isStr(t.name) || !isStr(t.color) || !Array.isArray(t.players)) return null;
     }

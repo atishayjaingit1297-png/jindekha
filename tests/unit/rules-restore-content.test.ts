@@ -52,6 +52,7 @@ describe('restoreGame', () => {
     expect(restoreGame('nonsense', new Set())).toBeNull();
     expect(restoreGame({ ...g, schemaVersion: 999 }, known(g))).toBeNull();
     expect(restoreGame({ ...g, teams: [] }, known(g))).toBeNull();
+    expect(restoreGame(JSON.parse(JSON.stringify(newGame({ teams: 1 }))), known(newGame({ teams: 1 })))).not.toBeNull();
     expect(restoreGame({ ...g, status: 'dancing' }, known(g))).toBeNull();
     expect(restoreGame({ ...g, teamIndex: 7 }, known(g))).toBeNull();
   });
@@ -92,9 +93,11 @@ describe('bundled content', () => {
 
   it('keeps forbidden words attached to their target (spot checks against the PDFs)', () => {
     const byId = new Map(decks.flatMap((d) => d.cards).map((c) => [c.id, c]));
-    expect(byId.get('jt1-001')).toMatchObject({ target: 'तत्वार्थ सूत्र', forbidden: ['उमा स्वामी', 'संकृत', '१० अध्याय', 'मोक्ष शास्त्र'] });
+    expect(byId.get('jt1-001')).toMatchObject({ target: 'तत्वार्थ सूत्र', forbidden: ['उमा स्वामी', 'संस्कृत', '१० अध्याय', 'मोक्ष शास्त्र'] });
     expect(byId.get('jt1-021')).toMatchObject({ target: 'भक्तामर स्तोत्र', forbidden: ['मानतुंग आचार्य', '४८ काव्य', 'आदिनाथ भगवान', 'ताले'] });
     expect(byId.get('jt2-017')).toMatchObject({ target: 'प्रथमानुयोग', forbidden: ['पुराण', 'कहानी', 'चरित्र', 'तीर्थंकर'] });
+    expect(byId.get('jt2-021')).toMatchObject({ target: 'समाधि मरण' });
+    expect(byId.get('jt1-031')).toMatchObject({ target: 'सामायिक' });
     expect(byId.get('jt2-049')).toMatchObject({ target: 'क्षायिक', forbidden: ['सम्यक्त्व', 'ज्ञान', 'नाश', 'कर्म'] });
   });
 

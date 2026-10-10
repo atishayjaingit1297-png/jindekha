@@ -20,7 +20,7 @@ export const LIMITS = {
   points: { min: 0, max: 10 },
   rounds: { min: 1, max: 20 },
   targetScore: { min: 5, max: 200 },
-  teams: { min: 2, max: 6 },
+  teams: { min: 1, max: 6 },
   maxSkips: { min: 0, max: 20 },
 } as const;
 

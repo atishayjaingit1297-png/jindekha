@@ -1,4 +1,4 @@
-import { getLeaders } from '../../core';
+import { getLeaders, getScores } from '../../core';
 import { useApp } from '../../state/AppContext';
 import { useT } from '../../i18n';
 import { Icon } from '../../ui/Icon';
@@ -23,7 +23,11 @@ export function RoundSummaryView({ navigate }: GameViewProps) {
       <div className="headline">
         <h1>{t.game.roundDone(game.round)}</h1>
         <p className="muted" style={{ margin: 0 }}>
-          {leaders.length > 1 ? `${t.game.tied}: ${leaders.map((t) => t.name).join(', ')}` : `${t.game.leading}: ${leaders[0].name}`}
+          {game.teams.length === 1
+            ? t.game.soloTotal(getScores(game)[game.teams[0].id])
+            : leaders.length > 1
+              ? `${t.game.tied}: ${leaders.map((x) => x.name).join(', ')}`
+              : `${t.game.leading}: ${leaders[0].name}`}
           {end.type === 'rounds' ? ` · ${t.game.of(game.round, end.rounds)} ${t.setup.rounds}` : ` · ${t.setup.targetScore} ${end.target}`}
         </p>
       </div>

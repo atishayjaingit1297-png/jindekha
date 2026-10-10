@@ -7,7 +7,8 @@ import { Logo } from '../ui/Logo';
 import { Icon } from '../ui/Icon';
 import { ConfirmDialog } from '../ui/controls';
 import { promptInstall, usePwa } from '../pwa/pwa';
-import { ALL_CARDS } from '../content';
+import { ALL_CARDS, DECKS } from '../content';
+import { TEAM_COLORS } from '../persistence/repository';
 
 const TONES = ['saffron', 'maroon', 'forest', 'gold'] as const;
 
@@ -50,13 +51,24 @@ function FloatingWords() {
 
 export function Home({ navigate }: { navigate: (r: Route) => void }) {
   const t = useT();
-  const { game, prefs, updatePrefs } = useApp();
+  const { game, prefs, updatePrefs, startGame } = useApp();
   const theme = useEffectiveTheme(prefs.theme);
   const pwa = usePwa();
-  const [confirmNew, setConfirmNew] = useState(false);
+  const [confirm, setConfirm] = useState<'setup' | 'quick' | null>(null);
   const inProgress = game && game.status !== 'completed';
 
-  const onNew = () => (inProgress ? setConfirmNew(true) : navigate('setup'));
+  // One team, one round, current rules and decks — straight to the first turn.
+  const startQuick = () => {
+    const decks = prefs.deckIds?.filter((id) => DECKS.some((d) => d.id === id));
+    startGame({
+      teams: [{ name: t.home.soloTeam, color: TEAM_COLORS[0], players: [] }],
+      deckIds: decks?.length ? decks : DECKS.map((d) => d.id),
+      rules: { ...prefs.rules, endCondition: { type: 'rounds', rounds: 1 } },
+    });
+    navigate('game');
+  };
+  const go = (target: 'setup' | 'quick') => (target === 'setup' ? navigate('setup') : startQuick());
+  const request = (target: 'setup' | 'quick') => (inProgress ? setConfirm(target) : go(target));
 
   return (
     <main className="screen home">
@@ -111,8 +123,18 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
             </span>
           </button>
         )}
-        <button type="button" className="btn primary block lg shine" onClick={onNew}>
+        <button type="button" className="btn primary block lg shine" onClick={() => request('setup')}>
           <Icon name="plus" /> {t.home.newGame}
+        </button>
+        <button type="button" className="quick-card" onClick={() => request('quick')}>
+          <span className="quick-bolt" aria-hidden>
+            <Icon name="bolt" />
+          </span>
+          <span className="quick-text">
+            <strong>{t.home.quickGame}</strong>
+            <span className="small">{t.home.quickGameMeta(prefs.rules.turnSeconds)}</span>
+          </span>
+          <Icon name="play" />
         </button>
         <div className="grid-2">
           <button type="button" className="tile" onClick={() => navigate('rules')}>
@@ -138,16 +160,16 @@ export function Home({ navigate }: { navigate: (r: Route) => void }) {
         )}
       </div>
 
-      {confirmNew && (
+      {confirm && (
         <ConfirmDialog
           message={t.home.discardConfirm}
-          confirmLabel={t.home.newGame}
+          confirmLabel={confirm === 'quick' ? t.home.quickGame : t.home.newGame}
           cancelLabel={t.common.cancel}
           danger
-          onCancel={() => setConfirmNew(false)}
+          onCancel={() => setConfirm(null)}
           onConfirm={() => {
-            setConfirmNew(false);
-            navigate('setup');
+            setConfirm(null);
+            go(confirm);
           }}
         />
       )}

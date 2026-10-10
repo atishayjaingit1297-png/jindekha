@@ -152,6 +152,11 @@ export function Setup({ navigate }: { navigate: (r: Route, o?: { replace?: boole
           </details>
         </section>
       ))}
+      {teams.length === 1 && (
+        <p className="muted small" style={{ margin: 0 }}>
+          {t.setup.soloHint}
+        </p>
+      )}
       {teams.length < LIMITS.teams.max && (
         <button type="button" className="btn secondary block" onClick={addTeam}>
           <Icon name="plus" /> {t.setup.addTeam}
